@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">HKHFDemo</string>
+
+
+    <string name="google_web_client_id">24337588735-b1jljppdt070ih05nm1ds5v2l6vbb2ca.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">419031847341915</string>
+    <string name="facebook_client_token">c4801e2d336364bcff40289172b5b987</string>
+    <string name="fb_login_protocol_scheme">fb419031847341915</string>
+
+<!--    <string name="server_client_id">506958563596-jde2dons4uted8sok3q22adf6e5eli04.apps.googleusercontent.com</string>-->
+    <string name="adjust_app_key">9jp58df3qjgg</string>
+    <string name="application_id">com.xinji.test</string>
+
+    <!--   applovin广告sdk key -->
+    <string name="applovin_sdk_key">OCpD3RM3hfIxQuzngoQdElzri8Li3U67KJTwg4B_NPem3GSwBv1OCw9xh3E3sRptsOop_FzUgIuzmK2RxFtKCR</string>
+    <!--  google广告id  -->
+    <string name="gg_admob_app_id">ca-app-pub-4430438031018910~6684066455</string>
+</resources>

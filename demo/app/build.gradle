@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+android {
+    compileSdkVersion 35
+    buildToolsVersion '35.0.0'
+    namespace "com.xinji.demo"
+    signingConfigs {
+        release {
+
+        }
+        debug {
+
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.xinji.test"
+        minSdkVersion 23
+        targetSdkVersion 35
+        versionCode 27
+        versionName "1.0.27"
+        signingConfig signingConfigs.release
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.pseudos.game:core:2.5.0.4'
+    implementation 'com.pseudos.game:pay-google:1.0.0.9'
+
+    //广告适配器，（无需广告，请勿引用）
+    implementation 'com.pseudos.game:ads-topon:1.0.0.7'
+    //基础库
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.code.gson:gson:2.8.9'
+}
