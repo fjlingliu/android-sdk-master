@@ -47,8 +47,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Facebook授权Key</strong></td>
-<td
-style="text-align: left;">facebook登录需要配置的参数（不用facebook可不提供）</td>
+<td style="text-align: left;">facebook登录需要配置的参数（不用facebook可不提供）</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Adjust授权key</strong></td>
@@ -372,18 +371,15 @@ IGameManage.Builder.build().init(Activity activity, AuthorizationRequest request
 </tr>
 <tr>
 <td style="text-align: left;">onLogout()</td>
-<td
-style="text-align: left;">退出登录成功，游戏可调用相对应的游戏退出操作，并重新调用登录接口</td>
+<td style="text-align: left;">退出登录成功，游戏可调用相对应的游戏退出操作，并重新调用登录接口</td>
 </tr>
 <tr>
 <td style="text-align: left;">onBindThirdPart(IXJUserInfo info)</td>
-<td
-style="text-align: left;">以游客登录的情况下，用户绑定三方登录（可无需处理）</td>
+<td style="text-align: left;">以游客登录的情况下，用户绑定三方登录（可无需处理）</td>
 </tr>
 <tr>
 <td style="text-align: left;">onCancellationAccount（）</td>
-<td
-style="text-align: left;">注销账号成功，如果用户未在15天内没有再次登录，那么账号将彻底废弃（对接时可当退出登录处理）</td>
+<td style="text-align: left;">注销账号成功，如果用户未在15天内没有再次登录，那么账号将彻底废弃（对接时可当退出登录处理）</td>
 </tr>
 <tr>
 <td style="text-align: left;">onInitResult(int code, String s)</td>
@@ -393,8 +389,7 @@ style="text-align: left;">注销账号成功，如果用户未在15天内没有�
 </tr>
 <tr>
 <td style="text-align: left;">onTrackEvents(String s, String s1)</td>
-<td
-style="text-align: left;">Sdk内部事件回调，可用于做日志追踪，统计等功能。详情请参考“sdk事件回调说明”，可不做处理</td>
+<td style="text-align: left;">Sdk内部事件回调，可用于做日志追踪，统计等功能。详情请参考“sdk事件回调说明”，可不做处理</td>
 </tr>
 </tbody>
 </table>
@@ -702,8 +697,7 @@ IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallB
 <td style="text-align: left;"><blockquote>
 <p>可以</p>
 </blockquote></td>
-<td
-style="text-align: left;"><p><strong>订单原价，单位：美分（非必传）</strong></p>
+<td style="text-align: left;"><p><strong>订单原价，单位：美分（非必传）</strong></p>
 <p><strong>注：在订单折扣功能中，如果需要展示原价和折后价时，需同时传入此字段和amount（实际付款金额）</strong></p></td>
 </tr>
 <tr>
