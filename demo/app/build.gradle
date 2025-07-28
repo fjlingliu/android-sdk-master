@@ -43,11 +43,13 @@ android {
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.pseudos.game:core:2.5.0.4'
-    implementation 'com.pseudos.game:pay-google:1.0.0.9'
+    //todo 核心库- 根据文档下载版本去替换
+    implementation 'com.xxx.xxx:core:xxxx'
+    //todo 支付库- 根据文档下载版本去替换
+    implementation 'com.xxx.xxxx:pay-google:xxxx'
 
-    //广告适配器，（无需广告，请勿引用）
-    implementation 'com.pseudos.game:ads-topon:1.0.0.7'
+    //todo 广告适配器，（无需广告，请勿引用）- 根据文档下载版本去替换
+    implementation 'com.xxx.xxxx:ads-topon:xxxx'
     //基础库
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.12.0'

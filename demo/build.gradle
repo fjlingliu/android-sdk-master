@@ -33,6 +33,7 @@ allprojects {
         maven {
             url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
             credentials {
+               //todo  根据文档去替换
                 username = "xxxx"
                 password = "xxxxx"
             }

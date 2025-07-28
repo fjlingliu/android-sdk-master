@@ -122,10 +122,10 @@ repositories {
     url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
     
     credentials {
-    
-      username = "fjlingliu"
+    //todo  根据文档去替换
+      username = "xxxx"
       
-      password = "ghp\_vR7fGXSu8fAbxP8WiT8xZySrB2Ka1i0vcLBy"
+      password = "xxxxxxxxx"
   
   }
 
@@ -145,9 +145,10 @@ repositories {
 
 //核心库
 
-implementation 'com.pseudos.game:core:2.5.0.4'
-
-implementation 'com.pseudos.game:pay-google:1.0.0.9'
+//todo 核心库- 根据文档下载版本去替换
+implementation 'com.xxx.xxx:core:xxxx'
+//todo 支付库- 根据文档下载版本去替换
+implementation 'com.xxx.xxxx:pay-google:xxxx'
 
 //基础库
 
@@ -247,7 +248,7 @@ buildscript {
 ![](media/image3.png)
 
 ### 2.6应用级build.gradle配置（app/build.gradle） 
-
+``````
 apply plugin: 'com.android.application'
 
 // Add the following line:
@@ -260,6 +261,7 @@ android {
 // ...
 
 }
+``````
 
 # 3 接口说明
 
@@ -268,6 +270,16 @@ android {
 **注意：**
 
 必须在Application下的onCreate中初始化
+```
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        IGameManage.Builder.build().onAppCreate(this);
+    }
+}
+
+```
 
 ## 3.1 授权接口
 
@@ -276,6 +288,11 @@ android {
 **注意：**
 
 init**接口中传入的Activity不可被销毁，否则会产生Crash**
+
+```
+IGameManage.Builder.build().init(Activity activity, AuthorizationRequest request, XJInitCallBack callBack);
+
+```
 
 接口所需参数：
 
@@ -499,6 +516,10 @@ IGameManage.Builder.build().onActivityDestroy();
 ## 3.2 登陆接口
 
 此接口请在授权完成后的登录操作调用。此接口调用方法如下：
+````
+ IGameManage.Builder.build().login(Activity activity, LoginModeCallBack callBack);
+ 
+````
 
 接口所需参数：
 
@@ -595,7 +616,10 @@ IGameManage.Builder.build().onActivityDestroy();
 此接口请在授权完成后调用。此接口调用方法如下：
 
 **接口所需参数：**
+````
+IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallBack callBack);
 
+````
 <table>
 <colgroup>
 <col style="width: 39%" />
@@ -833,6 +857,9 @@ Toast.LENGTH\_LONG).show();
 ## 3.4 应用退出接口（请务必接入）
 
 此接口请在程序退出的时候调用，此接口调用方法如下：
+```
+IGameManage.Builder.build(). exit(Activity act, ExitCallBack callBack);
+```
 
 **接口所需参数:**
 
@@ -918,6 +945,10 @@ return super.onKeyDown(keyCode, event);
 
 ```````
 ## 3.5 提交角色信息接口
+
+```
+ IGameManage.Builder.build().submitGameEventInfo(Activity , GameEventType,GameEventInfoRequest , SubmitUserRoleCallBack );
+```
 
 此接口必须在角色登录成功和第一次创建角色的时候调用, 调用方法如下：
 
@@ -1146,7 +1177,9 @@ Log.e(TAG, "提交失败");
 并在相应的回调方法中onLogout 做相关处理。
 
 注：调用该接口成功后会在初始化接口回调的onLogout监听中回调结果
-
+```
+IGameManage.Builder.build(). logout();
+```
 # 4 注意事项
 
 ## 4.1 所有 SDK 接口调用 都需要在调用授权接口成功以后才能继续执行
