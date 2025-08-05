@@ -1174,6 +1174,16 @@ Log.e(TAG, "提交失败");
 ```
 IGameManage.Builder.build(). logout();
 ```
+## 3.6 绑定第三方（邮箱，手机号） 接口
+
+此接口用于绑定第三方（包括邮箱和手机号）, 游戏中若需要实现绑定邮箱和手机号, 请调用该接口方法,
+并在相应的回调方法onBindThirdPart（初始化接口（3.1 授权接口）全局回调监听）做相关处理。
+
+注：调用该接口成功后会在初始化接口回调的onLogout监听中回调结果
+```
+ IGameManage.Builder.build().bindThirdPart(activity);
+```
+
 # 4 注意事项
 
 ## 4.1 所有 SDK 接口调用 都需要在调用授权接口成功以后才能继续执行
