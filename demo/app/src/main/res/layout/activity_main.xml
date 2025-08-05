@@ -11,30 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-        <RadioGroup
-            android:id="@+id/rg_platform"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:id="@+id/rb_hk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="香港"/>
-            <RadioButton
-                android:id="@+id/rb_us"
-                android:layout_marginStart="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="北美"/>
-            <RadioButton
-                android:id="@+id/rb_ru"
-                android:layout_marginStart="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="欧罗斯"/>
-        </RadioGroup>
+
 
 
         <EditText
@@ -97,6 +74,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="登录" />
+
+        <Button
+            android:id="@+id/bt_bind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="绑定" />
 
         <Button
             android:id="@+id/bt_pay"

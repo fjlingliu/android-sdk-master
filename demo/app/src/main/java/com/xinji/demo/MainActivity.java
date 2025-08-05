@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
     private Button btnLoginFB;
     private Button mBtAuth;                                         // 授权
     private Button mBtLogin;                                        //登录
+
+    private Button btnBind;
     private Button mBtPay;                                          // 立即支付
     private Button mBtSubmit;                                        // 提交角色信息
     private Button mBtLogOut;                                       // 注销登录
@@ -89,6 +91,7 @@ public class MainActivity extends Activity {
         btnLoginFB = findViewById(R.id.bt_fb_login);
         mBtAuth = findViewById(R.id.bt_auth);
         mBtLogin = findViewById(R.id.bt_login);
+        btnBind =findViewById(R.id.bt_bind);
         mBtPay = findViewById(R.id.bt_pay);
         mBtSubmit = findViewById(R.id.bt_submit);
         mBtLogOut = findViewById(R.id.bt_logout);
@@ -104,6 +107,8 @@ public class MainActivity extends Activity {
         mBtAuth.setOnClickListener(v -> doAuth());
         //登录
         mBtLogin.setOnClickListener(v -> doLogin());
+        //绑定
+        btnBind.setOnClickListener(v-> doBind());
         // 创建订单信息
         mBtPay.setOnClickListener(v -> doPay());
         // 提交角色信息
@@ -118,6 +123,14 @@ public class MainActivity extends Activity {
         //获取设备id
         HCDeviceManager.getInstance().getDeviceId();
     }
+
+    /**
+     * 绑定
+     */
+    private void doBind() {
+        IGameManage.Builder.build().bindThirdPart(this);
+    }
+
 
     /**
      * 开始支付
