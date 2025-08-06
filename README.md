@@ -1172,7 +1172,7 @@ Log.e(TAG, "提交失败");
 
 注：调用该接口成功后会在初始化接口回调的onLogout监听中回调结果
 ```
-IGameManage.Builder.build(). logout();
+IGameManage.Builder.build().logout();
 ```
 ## 3.6 绑定第三方（邮箱，手机号） 接口
 
