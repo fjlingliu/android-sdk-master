@@ -76,7 +76,7 @@ compileSdkVersion 35
 
 buildToolsVersion "35.0.0"
 
-minSdkVersion 大于等于23
+minSdkVersion 大于等于24
 
 Gradle版本大于8.0
 
