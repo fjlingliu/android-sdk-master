@@ -29,6 +29,9 @@ allprojects {
         maven {
             url "https://jfrog.anythinktech.com/artifactory/overseas_sdk"
         }
+
+        //tiktok 仓库
+        maven { url 'https://jitpack.io' } // add this line!!
         //适配器仓库
         maven {
             url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
@@ -38,6 +41,7 @@ allprojects {
                 password = "xxxxx"
             }
         }
+
     }
 }
 

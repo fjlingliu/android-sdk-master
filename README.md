@@ -1,6 +1,6 @@
 海外 SDK 接入文档
 
-# 概述
+# 1.概述
 
 本文档面向安卓开发者，用于指导开发者快速接入 海外SDK，本 SDK 为本 SDK
 用于 Android APP
@@ -54,6 +54,10 @@
 <td style="text-align: left;">Adjust追踪配置的参数</td>
 </tr>
 <tr>
+<td style="text-align: left;"><strong>Tiktok自归因参数</strong></td>
+<td style="text-align: left;">xxxxxxx(不用tiktok 可不提供)</td>
+</tr>
+<tr>
 <td style="text-align: left;"><strong>Google-services.json</strong></td>
 <td style="text-align: left;">FirebaseAndroid配置文件</td>
 </tr>
@@ -83,6 +87,7 @@ Gradle版本大于8.0
 ## 2.3 导入资源包
 
 ### 2.3.1 添加仓库
+
 ````
 repositories {
 
@@ -114,6 +119,9 @@ repositories {
   
   }
   
+  //tiktok 仓库
+  maven { url 'https://jitpack.io' } // add this line!!
+  
   //SDK适配器仓库
   
   maven {
@@ -133,13 +141,14 @@ repositories {
 }
 ````
 
-### 
+###  
 
-### 
+###  
 
 ### 2.3.2 配置build.gradle文件
 
 **添加引用**
+
 ````
 
 //核心库
@@ -169,23 +178,47 @@ implementation 'com.google.code.gson:gson:2.8.9'
 
 ### 2.4.1 string.xml中添加如下配置
 
-**注意：**
 
+
+```
+<!--  google参数（必填） -->
+<string name="google_web_client_id"></string>
+
+<!--  fb登录参数（无fb登录默认值即可）  -->
+<string name="facebook_app_id"></string>
+<string name="fb_login_protocol_scheme"></string>
+<string name="facebook_client_token"></string>
+
+<!--  adjust 事件（无此功能默认即可） -->
+<string name="adjust_app_key"></string>
+
+<!--  应用唯一标志 app id （必填） -->
+<string name="application_id"></string>
+
+<!--  tiktok事件自归因  -->
+<string name="tt_app_id"></string>
+
+<!--  applovin广告sdk key （无广告忽略此字段）-->
+<string name="applovin_sdk_key"></string>
+<!--  google广告id （无广告忽略此字段） -->
+<string name="gg_admob_app_id"></string>
+```
+**注意：**
 默认配置已配置，实际配置id找运营索要物料
 
-**注：**
+**参数详解：**
 
-1.  **‘fb配置’如果没有接入facebook登录可为空**
+1. **‘fb配置’如果没有接入facebook登录可为空**
 
-    1.  **参数fb\_login\_protocol\_scheme：此参数为”fb”+facebook\_app\_id**
+    1. **参数fb\_login\_protocol\_scheme：此参数为”fb”+facebook\_app\_id**
 
-    2.  **参数facebook\_client\_token：对应物料中的“客户端口令”**
+    2. **参数facebook\_client\_token：对应物料中的“客户端口令”**
 
-2.  **application\_id 为应用的唯一标志**
+2. **application\_id 为应用的唯一标志**
 
-3.  **Goolge\_web\_client\_id 可从Google-service.json文件中获取**
+3. **Goolge\_web\_client\_id 可从Google-service.json文件中获取**
 
-    ![](media/image1.png)
+   ![](media/image1.png)
 
 ### 2.4.2 amazon登录授权key（如不接amazon登录可忽略此步骤）
 
@@ -196,6 +229,7 @@ implementation 'com.google.code.gson:gson:2.8.9'
 ### 2.4.3添加google play服务
 
 在项目的顶级build.gradle文件，确保谷歌的Maven仓库包括：
+
 ````
 buildscript {
   
@@ -247,6 +281,7 @@ buildscript {
 ![](media/image3.png)
 
 ### 2.6应用级build.gradle配置（app/build.gradle） 
+
 ``````
 apply plugin: 'com.android.application'
 
@@ -269,6 +304,7 @@ android {
 **注意：**
 
 必须在Application下的onCreate中初始化
+
 ```
 public class MyApplication extends Application {
     @Override
@@ -295,104 +331,29 @@ IGameManage.Builder.build().init(Activity activity, AuthorizationRequest request
 
 接口所需参数：
 
-<table>
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>参数</strong></td>
-<td style="text-align: left;"><strong>可否为空</strong></td>
-<td style="text-align: left;"><strong>描述</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Activity</strong></td>
-<td style="text-align: left;">不可以</td>
-<td style="text-align: left;">上下文</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>InitRequest</strong></td>
-<td style="text-align: left;">不可以</td>
-<td style="text-align: left;">授权信息</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>InitCallBack</strong></td>
-<td style="text-align: left;">不可以</td>
-<td style="text-align: left;">授权回调对象，用于处理授权结果</td>
-</tr>
-</tbody>
-</table>
+| 参数 | 可否为空 | 描述 |
+|------|----------|------|
+| **Activity** | 不可以 | 上下文 |
+| **InitRequest** | 不可以 | 授权信息 |
+| **InitCallBack** | 不可以 | 授权回调对象，用于处理授权结果 |
 
 **InitRequest 实体类**
 
-<table>
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 22%" />
-<col style="width: 55%" />
-</colgroup>
-<tbody>
-<tr>
-<td style="text-align: center;"><strong>字段</strong></td>
-<td style="text-align: center;"><strong>可否为空</strong></td>
-<td style="text-align: center;"><strong>说明</strong></td>
-</tr>
-<tr>
-<td style="text-align: center;">fullScreen</td>
-<td style="text-align: center;">不可以</td>
-<td style="text-align: center;">设置游戏界面是否是全屏</td>
-</tr>
-<tr>
-<td style="text-align: center;">pid</td>
-<td style="text-align: center;">不可以</td>
-<td style="text-align: center;">游戏PID</td>
-</tr>
-<tr>
-<td style="text-align: center;">gameName</td>
-<td style="text-align: center;">不可以</td>
-<td style="text-align: center;">游戏名称</td>
-</tr>
-</tbody>
-</table>
+| 字段 | 可否为空 | 说明 |
+|------|----------|------|
+| fullScreen | 不可以 | 设置游戏界面是否是全屏 |
+| pid | 不可以 | 游戏PID |
+| gameName | 不可以 | 游戏名称 |
 
 **InitCallBack 回调说明**
 
-<table>
-<colgroup>
-<col style="width: 49%" />
-<col style="width: 50%" />
-</colgroup>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>方法</strong></td>
-<td style="text-align: left;"><strong>说明</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">onLogout()</td>
-<td style="text-align: left;">退出登录成功，游戏可调用相对应的游戏退出操作，并重新调用登录接口</td>
-</tr>
-<tr>
-<td style="text-align: left;">onBindThirdPart(IXJUserInfo info)</td>
-<td style="text-align: left;">以游客登录的情况下，用户绑定三方登录（可无需处理）</td>
-</tr>
-<tr>
-<td style="text-align: left;">onCancellationAccount（）</td>
-<td style="text-align: left;">注销账号成功，如果用户未在15天内没有再次登录，那么账号将彻底废弃（对接时可当退出登录处理）</td>
-</tr>
-<tr>
-<td style="text-align: left;">onInitResult(int code, String s)</td>
-<td style="text-align: left;">授权成功结果：如果code=
-=XJCode.CODE_INIT_SUCCESS
-授权成功，可唤起登录等接口，如果失败就不能继续操作其他接口</td>
-</tr>
-<tr>
-<td style="text-align: left;">onTrackEvents(String s, String s1)</td>
-<td style="text-align: left;">Sdk内部事件回调，可用于做日志追踪，统计等功能。详情请参考“sdk事件回调说明”，可不做处理</td>
-</tr>
-</tbody>
-</table>
+| 方法 | 说明                                                                         |
+|------|----------------------------------------------------------------------------|
+| `onLogout()` | 退出登录成功，游戏可调用相对应的游戏退出操作，并重新调用登录接口                                           |
+| `onBindThirdPart(IXJUserInfo info)` | 以游客登录的情况下，用户绑定三方登录（可无需处理）                                                  |
+| `onCancellationAccount()` | 注销账号成功，如果用户未在15天内没有再次登录，那么账号将彻底废弃（对接时可当退出登录处理）                             |
+| `onInitResult(int code, String s)` | 授权成功结果：如果`code == XJCode.CODE_INIT_SUCCESS`授权成功，可唤起登录等接口，如果失败就不能继续操作其他接口   |
+| `onTrackEvents(String s, String s1)` | Sdk内部事件回调，可用于做日志追踪，统计等功能。详情请参考[sdk事件回调说明.md](https://www.google.com)，可不做处理 |
 
 请求实例：
 
@@ -476,6 +437,7 @@ public void onTrackEvents(String s, String s1) {
 **调用生命周期方法的Activity不可被销毁，否则会产生Crash**
 
 **实例：**
+
 ````
 @Override
 
@@ -511,6 +473,7 @@ IGameManage.Builder.build().onActivityDestroy();
 ## 3.2 登陆接口
 
 此接口请在授权完成后的登录操作调用。此接口调用方法如下：
+
 ````
  IGameManage.Builder.build().login(Activity activity, LoginModeCallBack callBack);
  
@@ -611,10 +574,12 @@ IGameManage.Builder.build().onActivityDestroy();
 此接口请在授权完成后调用。此接口调用方法如下：
 
 **接口所需参数：**
+
 ````
 IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallBack callBack);
 
 ````
+
 <table>
 <colgroup>
 <col style="width: 39%" />
@@ -787,6 +752,7 @@ IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallB
 </table>
 
 **实例**
+
 ````
 PayRequest request = new PayRequest();
 
@@ -848,9 +814,11 @@ Toast.LENGTH\_LONG).show();
 
 });
 ````
+
 ## 3.4 应用退出接口（请务必接入）
 
 此接口请在程序退出的时候调用，此接口调用方法如下：
+
 ```
 IGameManage.Builder.build(). exit(Activity act, ExitCallBack callBack);
 ```
@@ -904,6 +872,7 @@ IGameManage.Builder.build(). exit(Activity act, ExitCallBack callBack);
 </table>
 
 **实例：**
+
 ``````
 @Override
 
@@ -938,6 +907,7 @@ return super.onKeyDown(keyCode, event);
 }
 
 ```````
+
 ## 3.5 提交角色信息接口
 
 ```
@@ -1122,6 +1092,7 @@ SubmitUserRoleCallBack **回调说明**
 </table>
 
 **实例：**
+
 ``````
 GameEventInfoRequest request = new GameEventInfoRequest();
 
@@ -1165,21 +1136,25 @@ Log.e(TAG, "提交失败");
 
 });
 ``````
+
 ## 3.6 退出登录 接口
 
 此接口用于手动退出登录, 游戏中若自带切换帐号入口, 请调用该接口方法,
 并在相应的回调方法中onLogout 做相关处理。
 
 注：调用该接口成功后会在初始化接口回调的onLogout监听中回调结果
+
 ```
 IGameManage.Builder.build().logout();
 ```
+
 ## 3.6 绑定第三方（邮箱，手机号） 接口
 
 此接口用于绑定第三方（包括邮箱和手机号）, 游戏中若需要实现绑定邮箱和手机号, 请调用该接口方法,
 并在相应的回调方法onBindThirdPart（初始化接口（3.1 授权接口）全局回调监听）做相关处理。
 
 注：调用该接口成功后会在初始化接口回调的onLogout监听中回调结果
+
 ```
  IGameManage.Builder.build().bindThirdPart(activity);
 ```
