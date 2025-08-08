@@ -353,7 +353,7 @@ IGameManage.Builder.build().init(Activity activity, AuthorizationRequest request
 | `onBindThirdPart(IXJUserInfo info)` | 以游客登录的情况下，用户绑定三方登录（可无需处理）                                                  |
 | `onCancellationAccount()` | 注销账号成功，如果用户未在15天内没有再次登录，那么账号将彻底废弃（对接时可当退出登录处理）                             |
 | `onInitResult(int code, String s)` | 授权成功结果：如果`code == XJCode.CODE_INIT_SUCCESS`授权成功，可唤起登录等接口，如果失败就不能继续操作其他接口   |
-| `onTrackEvents(String s, String s1)` | Sdk内部事件回调，可用于做日志追踪，统计等功能。详情请参考[sdk事件回调说明.md](https://www.google.com)，可不做处理 |
+| `onTrackEvents(String s, String s1)` | Sdk内部事件回调，可用于做日志追踪，统计等功能。详情请参考[sdk事件回调说明.md](https://github.com/fjlingliu/android-sdk-master/blob/main/sdk%E4%BA%8B%E4%BB%B6%E5%9B%9E%E8%B0%83%E8%AF%B4%E6%98%8E(%E9%9D%9E%E5%BF%85%E6%8E%A5).md)，可不做处理 |
 
 请求实例：
 
