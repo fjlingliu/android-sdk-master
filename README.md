@@ -209,7 +209,7 @@ implementation 'com.google.code.gson:gson:2.8.9'
 **参数详解：**
 
 1. **‘fb配置’如果没有接入facebook登录可为空**
-    1. **参数facebook\_app\_id：对应无聊中的“FB应用编号”**   
+    1. **参数facebook\_app\_id：对应物料中的“FB应用编号”**   
    
     1. **参数fb\_login\_protocol\_scheme：此参数为”fb”+FB应用编号**
 
