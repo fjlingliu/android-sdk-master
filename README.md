@@ -209,8 +209,9 @@ implementation 'com.google.code.gson:gson:2.8.9'
 **参数详解：**
 
 1. **‘fb配置’如果没有接入facebook登录可为空**
-
-    1. **参数fb\_login\_protocol\_scheme：此参数为”fb”+facebook\_app\_id**
+    1. **参数facebook\_app\_id：对应无聊中的“FB应用编号”**   
+   
+    1. **参数fb\_login\_protocol\_scheme：此参数为”fb”+FB应用编号**
 
     2. **参数facebook\_client\_token：对应物料中的“客户端口令”**
 
@@ -533,11 +534,11 @@ IGameManage.Builder.build().onActivityDestroy();
 </tr>
 <tr>
 <td style="text-align: left;">onLoginModeFail()</td>
-<td style="text-align: left;">登录失败</td>
+<td style="text-align: left;">登录失败（cp无需处理，只用于数据日志行为统计）</td>
 </tr>
 <tr>
 <td style="text-align: left;">onLoginModeCancel()</td>
-<td style="text-align: left;">用户登录取消</td>
+<td style="text-align: left;">用户登录取消（cp无需处理，只用于数据日志行为统计）</td>
 </tr>
 </tbody>
 </table>
