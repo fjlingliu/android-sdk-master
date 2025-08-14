@@ -2,7 +2,7 @@
 
 # 1.概述
 
-本文档面向安卓开发者，用于指导开发者快速接入 海外SDK，本 SDK 为本 SDK
+本文档面向安卓开发者，用于指导开发者快速接入 海外SDK
 用于 Android APP
 嵌入用户中心、收费模块、广告弹窗模块，用户中心目前支持使用浩凡账号登录、facebook账号登录、amazon登录、google
 账号登录，收费模块支持支付宝、微信、google、paypal、mycard。提供多个接口给集成者调用。
@@ -209,11 +209,11 @@ implementation 'com.google.code.gson:gson:2.8.9'
 **参数详解：**
 
 1. **‘fb配置’如果没有接入facebook登录可为空**
-    1. **参数facebook\_app\_id：对应物料中的“FB应用编号”**   
-   
-    1. **参数fb\_login\_protocol\_scheme：此参数为”fb”+FB应用编号**
+   1. **参数facebook\_app\_id：对应物料中的“FB应用编号”**
 
-    2. **参数facebook\_client\_token：对应物料中的“客户端口令”**
+   1. **参数fb\_login\_protocol\_scheme：此参数为”fb”+FB应用编号**
+
+   2. **参数facebook\_client\_token：对应物料中的“客户端口令”**
 
 2. **application\_id 为应用的唯一标志**
 
@@ -334,17 +334,17 @@ IGameManage.Builder.build().init(Activity activity, AuthorizationRequest request
 
 | 参数 | 可否为空 | 描述 |
 |------|----------|------|
-| **Activity** | 不可以 | 上下文 |
-| **InitRequest** | 不可以 | 授权信息 |
-| **InitCallBack** | 不可以 | 授权回调对象，用于处理授权结果 |
+| **Activity** | 否 | 上下文 |
+| **InitRequest** | 否 | 授权信息 |
+| **InitCallBack** | 否 | 授权回调对象，用于处理授权结果 |
 
 **InitRequest 实体类**
 
-| 字段 | 可否为空 | 说明 |
-|------|----------|------|
-| fullScreen | 不可以 | 设置游戏界面是否是全屏 |
-| pid | 不可以 | 游戏PID |
-| gameName | 不可以 | 游戏名称 |
+| 字段 | 可否为空 | 说明                                                                                                                                                             |
+|------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| pid | 否 | 游戏PID                                                                                                                                                          |
+| gameName | 否 | 游戏名称                                                                                                                                                           |
+| platformType | 否 | 地区类型 ： <br/> XJ_TYPE_PLATFORM_HK：港台  <br/> XJ_TYPE_PLATFORM_US：欧美  <br/> XJ_TYPE_PLATFORM_RU：欧罗斯  <br/><span style="color:red">注：请跟运营确认要对接的渠道后进行传值，不可传错</span> |
 
 **InitCallBack 回调说明**
 
@@ -368,6 +368,7 @@ request.setFullScreen(fullScreen + "");
 request.setPid(pid);
 
 request.setGameName(gameName);
+request.setPlatformType(PlatformType);//根据运营提供的地区来对接：港台还北美
 
 IGameManage.Builder.build().init(MainActivity.this, request, new
 InitCallBack() {
@@ -498,7 +499,7 @@ IGameManage.Builder.build().onActivityDestroy();
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Activity activity</strong></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;"><blockquote>
 <p>上下文</p>
 </blockquote></td>
@@ -508,7 +509,7 @@ IGameManage.Builder.build().onActivityDestroy();
 <blockquote>
 <p><strong>callBack</strong></p>
 </blockquote></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;"><blockquote>
 <p>处理注册、登录结果的回调</p>
 </blockquote></td>
@@ -534,11 +535,11 @@ IGameManage.Builder.build().onActivityDestroy();
 </tr>
 <tr>
 <td style="text-align: left;">onLoginModeFail()</td>
-<td style="text-align: left;">登录失败（cp无需处理，只用于数据日志行为统计）</td>
+<td style="text-align: left;">登录失败<span style="color:red">（cp无需处理，只用于数据日志行为统计）</span></td>
 </tr>
 <tr>
 <td style="text-align: left;">onLoginModeCancel()</td>
-<td style="text-align: left;">用户登录取消（cp无需处理，只用于数据日志行为统计）</td>
+<td style="text-align: left;">用户登录取消<span style="color:red">（cp无需处理，只用于数据日志行为统计）</span></td>
 </tr>
 </tbody>
 </table>
@@ -597,21 +598,21 @@ IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallB
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Activity activity</strong></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;"><blockquote>
 <p>上下文</p>
 </blockquote></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>PayRequest request</strong></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;"><blockquote>
 <p>订单信息</p>
 </blockquote></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>PayCallBack callBack</strong></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;"><blockquote>
 <p>处理支付结果的回调</p>
 </blockquote></td>
@@ -640,21 +641,21 @@ IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallB
 <tr>
 <td style="text-align: center;"><strong>amount</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">订单金额(美分)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>rmbAmount</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">订单金额(人民币，单位：元)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>companyOrderNo</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;"><strong>唯一订单号</strong></td>
 </tr>
@@ -669,56 +670,56 @@ IGameManage.Builder.build().pay(Activity mActivity, PayRequest request, PayCallB
 <tr>
 <td style="text-align: center;"><strong>gamersRole</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">角色名</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>gamersRoleId</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">角色ID</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>serverNum</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">区服ID</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>productName</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">商品名称</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>serverName</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">区服名称</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>grade</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">等级</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>productId</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">内购ID(运营人员提供)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>extra</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;">备注</td>
 </tr>
@@ -842,12 +843,12 @@ IGameManage.Builder.build(). exit(Activity act, ExitCallBack callBack);
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Activity</strong></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;">上下文</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>ExitCallBack</strong></td>
-<td style="text-align: left;">不可以</td>
+<td style="text-align: left;">否</td>
 <td style="text-align: left;">处理退出结果的事件</td>
 </tr>
 </tbody>
@@ -938,7 +939,7 @@ return super.onKeyDown(keyCode, event);
 <tr>
 <td style="text-align: left;"><strong>Activity activity</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;"><blockquote>
 <p>上下文</p>
@@ -947,7 +948,7 @@ return super.onKeyDown(keyCode, event);
 <tr>
 <td style="text-align: left;"><strong>GameEventType</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;"><p>提交事件类型：</p>
 <p>GAME_EVENT_TYPE_LEVEL（角色事件，用户登录和升级时调用）；</p>
@@ -957,7 +958,7 @@ return super.onKeyDown(keyCode, event);
 <td style="text-align: left;"><strong>GameEventInfoRequest
 request</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;"><blockquote>
 <p>角色信息</p>
@@ -967,7 +968,7 @@ request</strong></td>
 <td style="text-align: left;"><strong>SubmitUserRoleCallBack
 CallBack</strong></td>
 <td style="text-align: left;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: left;"><blockquote>
 <p>处理支付结果的回调</p>
@@ -1027,35 +1028,35 @@ CallBack</strong></td>
 <tr>
 <td style="text-align: center;"><strong>gamersGrade</strong></td>
 <td style="text-align: center;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: center;">等级</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>gamersRoleId</strong></td>
 <td style="text-align: center;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: center;">角色ID</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>serverNum</strong></td>
 <td style="text-align: center;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: center;">区服ID</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>gamersRole</strong></td>
 <td style="text-align: center;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: center;">角色名称</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>serverName</strong></td>
 <td style="text-align: center;"><blockquote>
-<p>不可以</p>
+<p>否</p>
 </blockquote></td>
 <td style="text-align: center;">区服名称</td>
 </tr>

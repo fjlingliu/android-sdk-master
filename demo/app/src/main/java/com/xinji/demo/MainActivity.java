@@ -19,14 +19,15 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.amazon.identity.auth.device.authorization.AuthorizationRequest;
-import com.hcgame.sdk.base.ads.AdType;
-import com.hcgame.sdk.base.ads.AdsException;
-import com.hcgame.sdk.base.ads.OnAdsListener;
-import com.hcgame.sdk.base.ads.RewardItem;
-import com.hcgame.sdk.base.exception.BaseException;
-import com.hcgame.sdk.base.pay.PayRequest;
+
 import com.pseudos.game.IGameManage;
 
+import com.pseudos.game.base.ads.AdType;
+import com.pseudos.game.base.ads.AdsException;
+import com.pseudos.game.base.ads.OnAdsListener;
+import com.pseudos.game.base.ads.RewardItem;
+import com.pseudos.game.base.exception.BaseException;
+import com.pseudos.game.base.pay.PayRequest;
 import com.pseudos.game.callback.ExitCallBack;
 import com.pseudos.game.callback.LoginModeCallBack;
 import com.pseudos.game.callback.PayCallBack;
@@ -34,6 +35,7 @@ import com.pseudos.game.callback.SubmitUserRoleCallBack;
 import com.pseudos.game.callback.InitCallBack;
 import com.pseudos.game.entity.GameEventType;
 import com.pseudos.game.entity.IUserInfo;
+import com.pseudos.game.entity.PlatformType;
 import com.pseudos.game.entity.ResultCode;
 import com.pseudos.game.exception.LoginException;
 import com.pseudos.game.http.data.request.InitRequest;
@@ -296,6 +298,18 @@ public class MainActivity extends Activity {
      * 授权
      */
     private void doAuth() {
+        //区域
+        RadioGroup rg = findViewById(R.id.rg_platform);
+        int platformID = rg.getCheckedRadioButtonId();
+        int platformType = PlatformType.XJ_TYPE_PLATFORM_HK.getType();
+        if (platformID == R.id.rb_hk) {
+            platformType = PlatformType.XJ_TYPE_PLATFORM_HK.getType();
+        } else if (platformID == R.id.rb_us) {
+            platformType = PlatformType.XJ_TYPE_PLATFORM_US.getType();
+        } else if (platformID == R.id.rb_ru) {
+            platformType = PlatformType.XJ_TYPE_PLATFORM_RU.getType();
+        }
+
         String pidStr = edt_pid.getText().toString().trim();
         if (!TextUtils.isEmpty(pidStr)) {
             pid = pidStr;
@@ -310,6 +324,8 @@ public class MainActivity extends Activity {
         request.setFullScreen(fullScreen + "");
         request.setPid(pid);
         request.setGameName(gameName);
+        //todo 根据运营提供的 平台类型来具体填充
+        request.setPlatformType(PlatformType.XJ_TYPE_PLATFORM_HK.getType());
         IGameManage.Builder.build().init(MainActivity.this, request, new InitCallBack() {
             @Override
             public void onLogout() {
