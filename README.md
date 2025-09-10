@@ -971,7 +971,7 @@ CallBack</strong></td>
 <p>否</p>
 </blockquote></td>
 <td style="text-align: left;"><blockquote>
-<p>处理支付结果的回调</p>
+<p>处理提交结果的回调</p>
 </blockquote></td>
 </tr>
 </tbody>
@@ -979,96 +979,18 @@ CallBack</strong></td>
 
 **GameEventInfoRequest 实体类**
 
-<table>
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 29%" />
-<col style="width: 40%" />
-</colgroup>
-<tbody>
-<tr>
-<td style="text-align: left;"><blockquote>
-<p>字段</p>
-</blockquote></td>
-<td style="text-align: center;"><blockquote>
-<p>可否为空</p>
-</blockquote></td>
-<td style="text-align: center;"><blockquote>
-<p>说明</p>
-</blockquote></td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>pid</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">运营提供</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>gameName</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">游戏名称</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>userNo</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">登录信息-用户编号</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>loginName</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">登录信息-登录名</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>gamersGrade</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">等级</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>gamersRoleId</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">角色ID</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>serverNum</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">区服ID</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>gamersRole</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">角色名称</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>serverName</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>否</p>
-</blockquote></td>
-<td style="text-align: center;">区服名称</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>isCreateNewRole</strong></td>
-<td style="text-align: center;"><blockquote>
-<p>可以</p>
-</blockquote></td>
-<td style="text-align: center;">是否是新创的角色(可增加统计准确性)</td>
-</tr>
-</tbody>
-</table>
+| 字段 | 可否为空 | 说明 |
+| :--- | :--- | :--- |
+| **pid** | 否 | 运营提供 |
+| **gameName** | 否 | 游戏名称 |
+| **userNo** | 否 | 登录信息-用户编号 |
+| **loginName** | 否 | 登录信息-登录名 |
+| **gamersGrade** | 否 | 等级 |
+| **gamersRoleId** | 否 | 角色ID |
+| **serverNum** | 否 | 区服ID |
+| **gamersRole** | 否 | 角色名称 |
+| **serverName** | 否 | 区服名称 |
+| **isCreateNewRole** | f否 | 是否是新创的角色(可增加统计准确性) true：新创角信息，false：角色升级情况|
 
 SubmitUserRoleCallBack **回调说明**
 
