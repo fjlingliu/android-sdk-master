@@ -281,7 +281,7 @@ apply plugin: 'com.android.application'
 // Add the following line:
 
 apply plugin: 'com.google.gms.google-services'  // Google Services
-apply plugin: 'com.google.firebase.crashlytics' //异常手机
+apply plugin: 'com.google.firebase.crashlytics' //异常收集
 
 plugin
 
