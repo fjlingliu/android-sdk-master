@@ -131,7 +131,6 @@ repositories {
     credentials {
     //todo  根据文档去替换
       username = "xxxx"
-      
       password = "xxxxxxxxx"
   
   }
@@ -159,17 +158,16 @@ implementation 'com.xxx.xxx:core:xxxx'
 implementation 'com.xxx.xxxx:pay-google:xxxx'
 
 //基础库
-
-implementation 'androidx.appcompat:appcompat:1.4.1'
-
-implementation 'com.google.android.material:material:1.12.0'//版本升级
-
-implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
-
+implementation 'androidx.appcompat:appcompat:1.7.1'
+implementation 'com.google.android.material:material:1.13.0'
+implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
 implementation 'com.google.firebase:firebase-analytics'
-
-implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
+implementation 'com.google.firebase:firebase-crashlytics'
+implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+//可靠的方式来获取应用的【安装来源信息】
+implementation 'com.android.installreferrer:installreferrer:2.2'
+//广告id
+implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
 implementation 'com.google.code.gson:gson:2.8.9'
 
 ````
@@ -245,15 +243,9 @@ buildscript {
     }
     
     dependencies {
-    
-      classpath 'com.android.tools.build:gradle:8.4.0'//注：gradle版本高于8.0
-      
-      classpath 'com.google.gms:google-services:4.3.15'
-      
-      // NOTE: Do not place your application dependencies here; they belong
-      
-      // in the individual module build.gradle files
-    
+        classpath 'com.android.tools.build:gradle:8.10.0'
+        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
     } 
   
   }
@@ -289,6 +281,8 @@ apply plugin: 'com.android.application'
 // Add the following line:
 
 apply plugin: 'com.google.gms.google-services'  // Google Services
+apply plugin: 'com.google.firebase.crashlytics' //异常手机
+
 plugin
 
 android {
