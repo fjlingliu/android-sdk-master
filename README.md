@@ -215,9 +215,10 @@ implementation 'com.google.code.gson:gson:2.8.9'
 
 2. **application\_id 为应用的唯一标志**
 
-3. **Goolge\_web\_client\_id 可从Google-service.json文件中获取**
+3. **goolge\_web\_client\_id 可从Google-service.json文件中获取**
 
    ![](media/image1.png)
+4. **server_client_id已经废弃，请使用goolge\_web\_client\_id**
 
 ### 2.4.2 amazon登录授权key（如不接amazon登录可忽略此步骤）
 
