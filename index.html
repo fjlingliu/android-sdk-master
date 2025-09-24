@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDK 管理平台</title>
+    <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          line-height: 1.6;
+          margin: 0;
+          padding: 20px;
+          background-color: #f5f5f5;
+          color: #333;
+        }
+
+        .container {
+          max-width: 1000px;
+          margin: 0 auto;
+          background: white;
+          padding: 30px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          color: #2c3e50;
+          border-bottom: 2px solid #3498db;
+          padding-bottom: 10px;
+        }
+
+        .version-info {
+          background-color: #f8f9fa;
+          padding: 15px;
+          border-radius: 5px;
+          margin-bottom: 20px;
+          border-left: 4px solid #3498db;
+        }
+
+        .form-group {
+          margin-bottom: 20px;
+        }
+
+        .callback-url {
+          margin-top: 20px;
+        }
+
+        label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+        }
+
+        select, input[type="checkbox"] {
+          padding: 8px;
+          border-radius: 4px;
+          border: 1px solid #ddd;
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .radio-group {
+          margin-top: 10px;
+        }
+
+        .radio-option {
+          margin-bottom: 8px;
+        }
+
+        button {
+          background-color: #3498db;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+          transition: background-color 0.3s;
+        }
+
+        button:hover {
+          background-color: #2980b9;
+        }
+
+        .code-section {
+          margin-top: 30px;
+          display: none;
+        }
+
+        .code-block {
+          background-color: #282c34;
+          color: #abb2bf;
+          padding: 15px;
+          border-radius: 5px;
+          margin-bottom: 15px;
+          position: relative;
+          font-family: 'Courier New', Courier, monospace;
+          white-space: pre-wrap;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background-color: #3a3f4b;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+
+        .copy-btn:hover {
+          background-color: #4d5360;
+        }
+
+        .tab {
+          overflow: hidden;
+          border: 1px solid #ccc;
+          background-color: #f1f1f1;
+          border-radius: 5px 5px 0 0;
+        }
+
+        .tab button {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 10px 16px;
+          transition: 0.3s;
+          color: #333;
+        }
+
+        .tab button:hover {
+          background-color: #ddd;
+        }
+
+        .tab button.active {
+          background-color: #3498db;
+          color: white;
+        }
+
+        .tabcontent {
+          display: none;
+          padding: 15px;
+          border: 1px solid #ccc;
+          border-top: none;
+          border-radius: 0 0 5px 5px;
+        }
+
+        .link-btn {
+          display: inline-block;
+          margin-right: 15px;
+          color: #3498db;
+          text-decoration: none;
+          padding: 5px 10px;
+          border: 1px solid #3498db;
+          border-radius: 4px;
+        }
+
+        .link-btn:hover {
+          background-color: #f0f8ff;
+        }
+
+        .option-group {
+          background-color: #f9f9f9;
+          padding: 15px;
+          border-radius: 5px;
+          margin-top: 15px;
+          border-left: 3px solid #3498db;
+        }
+
+        .disabled-option {
+          opacity: 0.6;
+          pointer-events: none;
+        }
+        
+        /* 新增表格样式 */
+        .param-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 15px 0;
+        }
+        
+        .param-table th, .param-table td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+        
+        .param-table th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+        
+        .param-table tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+        
+        .gradle-tabs {
+          margin-top: 20px;
+        }
+        
+        .gradle-tabcontent {
+          display: none;
+        }
+        
+        .gradle-tabcontent.active {
+          display: block;
+        }
+        
+        .gradle-tabs-buttons {
+          display: flex;
+          margin-bottom: 10px;
+        }
+        
+        .gradle-tab-btn {
+          padding: 8px 16px;
+          background-color: #f1f1f1;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          margin-right: 5px;
+          border-radius: 5px 5px 0 0;
+        }
+        
+        .gradle-tab-btn.active {
+          background-color: #3498db;
+          color: white;
+          border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="doc_oversea">
+    <h1>SDK 管理平台</h1>
+    <div class="form-group">
+        <label for="region">选择地区:</label>
+        <select id="region" onchange="updateRegionOptions()">
+            <option value="hk">香港</option>
+            <option value="us">北美</option>
+            <option value="rus">俄罗斯</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="system">选择体系:</label>
+        <select id="system">
+            <option value="halechou">正版SDK</option>
+            <option value="fakeip">领航版SDK</option>
+            <option value="commercial">市场版SDK</option>
+        </select>
+    </div>
+
+    <div id="loginOptions" class="option-group">
+        <label>选择登录方式:</label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="checkbox" id="login_google" name="loginPlatform" value="google" checked>
+                <label for="login_google" style="display: inline; font-weight: normal;">Google</label>
+            </div>
+            <div class="radio-option">
+                <input type="checkbox" id="login_vkid" name="loginPlatform" value="vkid">
+                <label for="login_vkid" style="display: inline; font-weight: normal;">VK ID</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="payOptions" class="option-group">
+        <label>选择支付方式:</label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="checkbox" id="pay_google" name="payPlatform" value="google" checked>
+                <label for="pay_google" style="display: inline; font-weight: normal;">Google</label>
+            </div>
+            <div class="radio-option">
+                <input type="checkbox" id="pay_rus" name="payPlatform" value="rus">
+                <label for="pay_rus" style="display: inline; font-weight: normal;">RUS</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="system">选择广告:</label>
+        <label>
+            <input type="checkbox" id="enableAds" onchange="toggleAdOptions()"> 接入广告
+        </label>
+
+        <div id="adOptions" style="display: none; margin-top: 15px;">
+            <label>选择广告平台:</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="topon" name="adPlatform" value="topon" checked>
+                    <label for="topon" style="display: inline; font-weight: normal;">TopOn</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="max" name="adPlatform" value="max">
+                    <label for="max" style="display: inline; font-weight: normal;">MAX</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="version-info">
+        <h3>当前 SDK 版本: v2.5.2.2</h3>
+        <div class="code-block">
+            <pre style="white-space: pre-wrap; background: #f5f5f5; padding: 15px; border-radius: 5px;">
+更新内容
+
+## 2.5.2.1
+- 登录文字描述添加
+- 支持北美体系
+
+## 2.5.2.2
+1、区号调整 支持搜索
+2、账号登录注册优化（输入账号后添加判断）
+3、游客可访问支付
+4、部分bug修复
+
+<strong>对接变动：</strong>
+在初始化接口添加参数platformType：
+香港：XJ_TYPE_PLATFORM_HK;
+北美：XJ_TYPE_PLATFORM_US
+俄罗斯：XJ_TYPE_PLATFORM_RUS
+```
+//todo 根据运营提供的 地区类型来具体填充
+InitRequest request = new InitRequest();
+request.setPlatformType(platformType);
+```
+            </pre>
+        </div>
+
+        <div>
+            <a href="https://github.com/fjlingliu/android-sdk-master/blob/main/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md"
+               target="_blank" class="link-btn">查看更新日志</a>
+            <a href=" https://github.com/fjlingliu/android-sdk-master/blob/main/%E5%B9%BF%E5%91%8A%E5%AF%B9%E6%8E%A5%E6%96%87%E6%A1%A3.md"
+               target="_blank" class="link-btn">广告对接接口</a>
+            <a href="https://github.com/fjlingliu/android-sdk-master/tree/main" target="_blank"
+               class="link-btn">sdk对接文档</a>
+            <a href="https://github.com/fjlingliu/android-sdk-master/tree/main/demo"
+               target="_blank"
+               class="link-btn">查看 Demo</a>
+        </div>
+    </div>
+
+    <button onclick="generateCode()">生成对接代码</button>
+
+    <div class="callback-url" id="callback-url">
+    </div>
+
+    <div id="codeSection" class="code-section">
+        <h2>对接代码</h2>
+
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'gradle')">Gradle 配置</button>
+            <button class="tablinks" onclick="openTab(event, 'strings')">strings.xml</button>
+            <button class="tablinks" onclick="openTab(event, 'client')">客户端对接</button>
+            <button class="tablinks" onclick="openTab(event, 'server')">服务端验证</button>
+        </div>
+
+        <div id="gradle" class="tabcontent" style="display: block;">
+            <div class="gradle-tabs">
+                <div class="gradle-tabs-buttons">
+                    <button class="gradle-tab-btn active" onclick="openGradleTab('projectGradle')">项目级 build.gradle</button>
+                    <button class="gradle-tab-btn" onclick="openGradleTab('moduleGradle')">模块级 build.gradle</button>
+                </div>
+
+                <div id="projectGradle" class="gradle-tabcontent active">
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard('projectGradleCode')">复制</button>
+                        <div id="projectGradleCode"></div>
+                    </div>
+                </div>
+
+                <div id="moduleGradle" class="gradle-tabcontent">
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard('moduleGradleCode')">复制</button>
+                        <div id="moduleGradleCode"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="strings" class="tabcontent">
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyToClipboard('stringsCode')">复制</button>
+                <div id="stringsCode"></div>
+            </div>
+        </div>
+
+        <div id="client" class="tabcontent">
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyToClipboard('clientCode')">复制</button>
+                <div id="clientCode"></div>
+            </div>
+        </div>
+
+        <div id="server" class="tabcontent">
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyToClipboard('serverCode')">复制</button>
+                <div id="serverCode"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 页面加载时初始化选项
+    document.addEventListener('DOMContentLoaded', function() {
+        updateRegionOptions();
+    });
+
+    function updateRegionOptions() {
+        const region = document.getElementById('region').value;
+        const loginGoogle = document.getElementById('login_google');
+        const loginVkid = document.getElementById('login_vkid');
+        const payGoogle = document.getElementById('pay_google');
+        const payRus = document.getElementById('pay_rus');
+
+        // 移除所有禁用状态
+        loginGoogle.classList.remove('disabled-option');
+        loginVkid.classList.remove('disabled-option');
+        payGoogle.classList.remove('disabled-option');
+        payRus.classList.remove('disabled-option');
+
+        // 重置所有选项
+        loginGoogle.checked = false;
+        loginVkid.checked = false;
+        payGoogle.checked = false;
+        payRus.checked = false;
+
+        if (region === 'rus') {
+            // 俄罗斯地区
+            loginVkid.checked = true;
+            loginVkid.classList.add('disabled-option');
+
+            payRus.checked = true;
+            payRus.classList.add('disabled-option');
+        } else {
+            // 香港和北美地区
+            loginGoogle.checked = true;
+            loginGoogle.classList.add('disabled-option');
+
+            payGoogle.checked = true;
+            payGoogle.classList.add('disabled-option');
+        }
+    }
+
+    function toggleAdOptions() {
+        const enableAds = document.getElementById('enableAds').checked;
+        document.getElementById('adOptions').style.display = enableAds ? 'block' : 'none';
+    }
+
+    function generateCode() {
+        const region = document.getElementById('region').value;
+        const system = document.getElementById('system').value;
+        const callbackUrl = document.getElementById('callback-url');
+        const enableAds = document.getElementById('enableAds').checked;
+        const adPlatform = enableAds ? document.querySelector('input[name="adPlatform"]:checked').value : null;
+
+        // 获取登录和支付选项
+        const loginOptions = [];
+        const payOptions = [];
+
+        document.querySelectorAll('input[name="loginPlatform"]:checked').forEach(function(checkbox) {
+            loginOptions.push(checkbox.value);
+        });
+
+        document.querySelectorAll('input[name="payPlatform"]:checked').forEach(function(checkbox) {
+            payOptions.push(checkbox.value);
+        });
+
+        // 回调地址
+        let callbackContent = '';
+        if (system === 'halechou') {
+            callbackContent = 'google页面回调地址:<label for="callback-url" style="display: inline; font-weight: normal;"> <a href="">https://pay-api.halesdk.com/gateway/getOrder.jhtml</a> </label>\n';
+        } else if (system === 'fakeip') {
+            callbackContent = 'google页面回调地址:<label for="callback-url" style="display: inline; font-weight: normal;"> <a href="">https://pay.cloakdev.com/gateway/selectData.jhtml </a> </label>\n';
+        } else if (system === 'commercial') {
+            callbackContent = 'google页面回调地址:<label for="callback-url" style="display: inline; font-weight: normal;"> <a href="">https://pay.xfxmkt.com/gateway/getOrder.jhtml </a> </label>\n';
+        }
+
+        callbackUrl.innerHTML = callbackContent;
+
+        // 生成项目级 Gradle 代码
+        let projectGradleCode = `buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/se_sdk_for_android/"
+        }
+        //适配器仓库
+        maven {
+            url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
+            credentials {
+                username = "fjlingliu"
+                password = "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"
+            }
+        }
+        ${region === 'rus' ? `//俄罗斯仓库
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+        }` : ''}
+        ${enableAds && adPlatform === 'topon' ? 
+        `//topon 广告仓库(不接广告可不必添加)
+        flatDir {
+            dirs \\'libs\\'
+        }
+        maven {
+            url "https://jfrog.anythinktech.com/artifactory/overseas_sdk"
+        }
+        //tiktok 仓库
+        maven { url 'https://jitpack.io' } // add this line!!` : ''}
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.10.0'
+        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
+        ${region === 'rus' ? 'classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"' : ''}
+    }
+}`;
+        document.getElementById('projectGradleCode').textContent = projectGradleCode;
+
+        // 生成模块级 Gradle 代码
+        let moduleGradleCode = `${region === 'rus' ?
+`apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'org.jetbrains.kotlin.android'` :
+`apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'`}
+
+android {
+    defaultConfig {
+        ${region === 'rus' ?
+`        manifestPlaceholders = [
+            VKIDRedirectHost: "oauth.vk.com",
+            VKIDRedirectScheme: "vk54148857", // 格式: vk{app_id}
+            VKIDClientID: "54148857",
+            VKIDClientSecret: "o9LelE9M3X84eBwkg8zb"
+        ]` : ''}
+    }
+}
+
+dependencies {`;
+
+        // 核心库
+        if (system === 'halechou') {
+            moduleGradleCode += `\n    //核心库\n    implementation 'com.halechou.sdk:core:2.5.2.2'`;
+        } else if (system === 'fakeip') {
+            moduleGradleCode += `\n    //核心库\n    implementation 'com.pseudos.game:core:2.5.2.2'`;
+        } else if (system === 'commercial') {
+            moduleGradleCode += `\n    //核心库\n    implementation 'com.littleelephant.sdk:core:2.5.2.2'`;
+        }
+
+        // 登录库
+        if (loginOptions.includes('vkid')) {
+            if (system === 'halechou') {
+                moduleGradleCode += `\n    //VK ID登录库\n    implementation 'com.halechou.sdk:login-vkid:1.0.0.0'`;
+            } else if (system === 'fakeip') {
+                moduleGradleCode += `\n    //VK ID登录库\n    implementation 'com.pseudos.game:login-vkid:1.0.0.0'`;
+            } else if (system === 'commercial') {
+                moduleGradleCode += `\n    //VK ID登录库\n    implementation 'com.littleelephant.sdk:login-vkid:1.0.0.0'`;
+            }
+        }
+
+        // 支付库
+        if (payOptions.includes('google')) {
+            if (system === 'halechou') {
+                moduleGradleCode += `\n    //Google支付库\n    implementation 'com.halechou.sdk:pay-google:1.0.1.0'`;
+            } else if (system === 'fakeip') {
+                moduleGradleCode += `\n    //Google支付库\n    implementation 'com.pseudos.game:pay-google:1.0.1.0'`;
+            } else if (system === 'commercial') {
+                moduleGradleCode += `\n    //Google支付库\n    implementation 'com.littleelephant.sdk:pay-google:1.0.1.0'`;
+            }
+        }
+
+        if (payOptions.includes('rus')) {
+            if (system === 'halechou') {
+                moduleGradleCode += `\n    //RUS支付库\n    implementation 'com.halechou.sdk:pay-rus:1.0.1.0'`;
+            } else if (system === 'fakeip') {
+                moduleGradleCode += `\n    //RUS支付库\n    implementation 'com.pseudos.game:pay-rus:1.0.1.0'`;
+            } else if (system === 'commercial') {
+                moduleGradleCode += `\n    //RUS支付库\n    implementation 'com.littleelephant.sdk:pay-rus:1.0.1.0'`;
+            }
+        }
+
+        moduleGradleCode += `
+    //基础库
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.code.gson:gson:2.8.9'`;
+
+        if (enableAds) {
+            if (adPlatform === 'topon') {
+                if (system === 'halechou') {
+                    moduleGradleCode += `\n    //广告适配器，（无需广告，请勿引用） \n    implementation 'com.halechou.sdk:ads-topon:1.0.0.9'`;
+                } else if (system === 'fakeip') {
+                    moduleGradleCode += `\n    //广告适配器，（无需广告，请勿引用） \n    implementation 'com.pseudos.game:ads-topon:1.0.0.9'`;
+                } else if (system === 'commercial') {
+                    moduleGradleCode += `\n    //广告适配器，（无需广告，请勿引用） \n    implementation 'com.littleelephant.sdk:ads-topon:1.0.0.9'`;
+                }
+            }
+        }
+
+        moduleGradleCode += `\n}`;
+        document.getElementById('moduleGradleCode').textContent = moduleGradleCode;
+
+        // 生成 strings.xml 代码
+        let stringsCode = `<resources>
+    <!-- SDK登录配置 -->
+    <string name="google_web_client_id">Google Web 应用类型的客户端 ID</string>
+    //fb登录 如果没有fb登录 可将3个参数都都设置为空即可
+    <string name="facebook_app_id">你的fb app id（示例：123456）</string>
+    <string name="fb_login_protocol_scheme">fb加你的fb app id（示例：fb123456）</string>
+    <string name="facebook_client_token">客户端口令</string>
+    <!-- tiktok参数 -->
+    <string name="tt_app_id"></string>
+    //如果由对接adjust 就配置此字段
+    <string name="adjust_app_key"></string>
+    <!-- 应用唯一标识 -->
+    <string name="application_id">your application id</string>`;
+
+        if (enableAds) {
+            stringsCode += `\n\n    <!-- 广告配置 -->
+    <!-- applovin广告sdk key （如没有就默认就行）-->
+    <string name="applovin_sdk_key">OCpD3RM3hfIxQuzngoQdElzri8Li3U67KJTwg4B_NPem3GSwBv1OCw9xh3E3sRptsOop_FzUgIuzmK2RxFtKCR</string>
+    <!-- google广告id (如没有就默认就行) -->
+    <string name="gg_admob_app_id">ca-app-pub-4430438031018910~6684066455</string>`;
+        }
+
+        stringsCode += `\n</resources>`;
+        document.getElementById('stringsCode').textContent = stringsCode;
+
+        // 生成客户端对接代码
+        let clientCode = `
+sdk对接详情请见在线文档 https://github.com/fjlingliu/android-sdk-master/tree/main
+
+地区配置: ${region === 'hk' ? '香港' : region === 'us' ? '北美' : '俄罗斯'}
+体系: ${system === 'halechou' ? '正版SDK' : system === 'fakeip' ? '领航版SDK' : '市场版SDK'}
+登录方式: ${loginOptions.join(', ')}
+支付方式: ${payOptions.join(', ')}
+${enableAds ? '广告平台: ' + adPlatform : '未接入广告'}
+        `;
+
+        document.getElementById('clientCode').textContent = clientCode;
+
+        // 生成服务端验证代码
+        let apiUrl = "";
+        if (system === 'halechou') {
+            apiUrl = 'pay-api.halesdk.com';
+        } else if (system === 'fakeip') {
+            apiUrl = 'pay.cloakdev.com';
+        } else if (system === 'commercial') {
+            apiUrl = 'pay.xfxmkt.com';
+        }
+
+        let serverCode = `一、用户二次验证
+
+接口地址: https://${apiUrl}/htmlApi/checkHtmlToken.jhtml
+请求方式: POST
+
+请求参数:
+<table class="param-table">
+  <tr>
+    <th>字段名</th>
+    <th>变量名</th>
+    <th>说明</th>
+    <th>必填</th>
+  </tr>
+  <tr>
+    <td>token</td>
+    <td>token</td>
+    <td>用户token（调用注册登陆接口成功后，返回的参数值）</td>
+    <td>是</td>
+  </tr>
+  <tr>
+    <td>pid</td>
+    <td>pid</td>
+    <td>由心迹平台提供的参数</td>
+    <td>是</td>
+  </tr>
+  <tr>
+    <td>ip</td>
+    <td>ip</td>
+    <td>用户IP地址</td>
+    <td>否</td>
+  </tr>
+</table>
+
+返回参数:
+<table class="param-table">
+  <tr>
+    <th>字段名</th>
+    <th>说明</th>
+  </tr>
+  <tr>
+    <td>code</td>
+    <td>状态码（100表示成功）</td>
+  </tr>
+  <tr>
+    <td>data</td>
+    <td>用户ID</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>错误信息</td>
+  </tr>
+</table>
+
+返回值说明:
+<table class="param-table">
+  <tr>
+    <th>code值</th>
+    <th>说明</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>成功</td>
+  </tr>
+  <tr>
+    <td>>100</td>
+    <td>失败</td>
+  </tr>
+</table>
+
+---------------------------------------------------------------------------------------------
+
+二、支付结果通知
+
+请求方式: POST（由研发提供回调地址，在心迹后台配置）
+
+请求参数:
+<table class="param-table">
+  <tr>
+    <th>字段名</th>
+    <th>变量名</th>
+    <th>说明</th>
+  </tr>
+  <tr>
+    <td>订单号</td>
+    <td>orderId</td>
+    <td>此订单号由开发者生成，可用于对账、客服支持等</td>
+  </tr>
+  <tr>
+    <td>玩家帐号</td>
+    <td>userNo</td>
+    <td>玩家登录成功客户端回传的用户id</td>
+  </tr>
+  <tr>
+    <td>充值金额</td>
+    <td>amount</td>
+    <td>订单充值的金额，单位：元（只接收>=1的整数位金额）</td>
+  </tr>
+  <tr>
+    <td>充值金额(美分)</td>
+    <td>amountUsd</td>
+    <td>订单充值的金额，单位：美分（只接收>=1的整数位金额）</td>
+  </tr>
+  <tr>
+    <td>扩展参数</td>
+    <td>extra</td>
+    <td>此参数调用sdk传入的扩展参数，原样传回</td>
+  </tr>
+  <tr>
+    <td>签名验证</td>
+    <td>flag</td>
+    <td>MD5(orderId+userNo+amount+extra+PKEY)</td>
+  </tr>
+  <tr>
+    <td>支付方式商户ID</td>
+    <td>merchantChannelId</td>
+    <td>2013:Apple支付 2014:Apple沙箱测试 3006:MyCard支付 3009:PayPal支付 3021:Google支付</td>
+  </tr>
+</table>
+
+返回值说明:
+<table class="param-table">
+  <tr>
+    <th>code值</th>
+    <th>说明</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>成功</td>
+  </tr>
+  <tr>
+    <td>>100</td>
+    <td>失败</td>
+  </tr>
+</table>
+
+注意: 
+1. 签名结果为了方便比较，统一转换为大写字符。"+"符号不参与签名
+2. 研发收到通知时，必须给予响应，返回信息格式: {"code":"100","data":"成功","msg":""}
+3. 如开发者无响应，后台会进入每三分钟一次的补单通知，需对订单唯一性做判断，避免重复补单
+4. 厂商必须对内购id的实际金额和下游传的订单金额进行比较`;
+
+        document.getElementById('serverCode').innerHTML = serverCode;
+
+        // 显示代码区域
+        document.getElementById('codeSection').style.display = 'block';
+    }
+
+    function openTab(evt, tabName) {
+        const tabcontent = document.getElementsByClassName("tabcontent");
+        for (let i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        const tablinks = document.getElementsByClassName("tablinks");
+        for (let i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    
+    function openGradleTab(tabName) {
+        const gradleTabs = document.getElementsByClassName("gradle-tabcontent");
+        for (let i = 0; i < gradleTabs.length; i++) {
+            gradleTabs[i].classList.remove("active");
+        }
+        
+        const gradleButtons = document.getElementsByClassName("gradle-tab-btn");
+        for (let i = 0; i < gradleButtons.length; i++) {
+            gradleButtons[i].classList.remove("active");
+        }
+        
+        document.getElementById(tabName).classList.add("active");
+        event.currentTarget.classList.add("active");
+    }
+
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        const text = element.textContent;
+
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = element.previousElementSibling;
+            btn.textContent = '已复制!';
+            setTimeout(() => {
+                btn.textContent = '复制';
+            }, 2000);
+        }).catch(err => {
+            console.error('复制失败: ', err);
+        });
+    }
+</script>
+</body>
+</html>
