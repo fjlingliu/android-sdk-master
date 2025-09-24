@@ -125,14 +125,7 @@ repositories {
   //SDK适配器仓库
   
   maven {
-  
-    url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
-    
-    credentials {
-    //todo  根据文档去替换
-      username = "xxxx"
-      password = "xxxxxxxxx"
-  
+     url "https://code-wan.qu06.cn/repository/maven-releases/"
   }
 
 }
