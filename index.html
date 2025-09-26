@@ -1,277 +1,395 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDK 管理平台</title>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #9b59b6;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-bg: #1a1a2e;
+            --darker-bg: #16213e;
+            --light-bg: #f5f5f5;
+            --text-color: #333;
+            --light-text: #f5f5f5;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         body {
-          font-family: 'Arial', sans-serif;
-          line-height: 1.6;
-          margin: 0;
-          padding: 20px;
-          background-color: #f5f5f5;
-          color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            color: var(--light-text);
+            min-height: 100vh;
         }
 
         .container {
-          max-width: 1000px;
-          margin: 0 auto;
-          background: white;
-          padding: 30px;
-          border-radius: 8px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         h1 {
-          color: #2c3e50;
-          border-bottom: 2px solid #3498db;
-          padding-bottom: 10px;
+            color: var(--light-text);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            padding-bottom: 15px;
         }
 
-        .version-info {
-          background-color: #f8f9fa;
-          padding: 15px;
-          border-radius: 5px;
-          margin-bottom: 20px;
-          border-left: 4px solid #3498db;
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .config-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .form-group {
-          margin-bottom: 20px;
-        }
-
-        .callback-url {
-          margin-top: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
         }
 
         label {
-          display: block;
-          margin-bottom: 8px;
-          font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--light-text);
         }
 
         select, input[type="checkbox"] {
-          padding: 8px;
-          border-radius: 4px;
-          border: 1px solid #ddd;
-          width: 100%;
-          max-width: 300px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+            width: 100%;
+            max-width: 300px;
+            transition: var(--transition);
         }
-
-        .radio-group {
-          margin-top: 10px;
+        /* 添加下拉选项的样式 */
+        select option {
+            background: rgba(30, 30, 30, 0.95); /* 下拉选项背景色 */
+            color: var(--light-text); /* 下拉选项文字颜色 */
+            padding: 10px;
         }
-
-        .radio-option {
-          margin-bottom: 8px;
-        }
-
-        button {
-          background-color: #3498db;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-          transition: background-color 0.3s;
-        }
-
-        button:hover {
-          background-color: #2980b9;
-        }
-
-        .code-section {
-          margin-top: 30px;
-          display: none;
-        }
-
-        .code-block {
-          background-color: #282c34;
-          color: #abb2bf;
-          padding: 15px;
-          border-radius: 5px;
-          margin-bottom: 15px;
-          position: relative;
-          font-family: 'Courier New', Courier, monospace;
-          white-space: pre-wrap;
-        }
-
-        .copy-btn {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background-color: #3a3f4b;
-          color: white;
-          border: none;
-          padding: 5px 10px;
-          border-radius: 3px;
-          cursor: pointer;
-        }
-
-        .copy-btn:hover {
-          background-color: #4d5360;
-        }
-
-        .tab {
-          overflow: hidden;
-          border: 1px solid #ccc;
-          background-color: #f1f1f1;
-          border-radius: 5px 5px 0 0;
-        }
-
-        .tab button {
-          background-color: inherit;
-          float: left;
-          border: none;
-          outline: none;
-          cursor: pointer;
-          padding: 10px 16px;
-          transition: 0.3s;
-          color: #333;
-        }
-
-        .tab button:hover {
-          background-color: #ddd;
-        }
-
-        .tab button.active {
-          background-color: #3498db;
-          color: white;
-        }
-
-        .tabcontent {
-          display: none;
-          padding: 15px;
-          border: 1px solid #ccc;
-          border-top: none;
-          border-radius: 0 0 5px 5px;
-        }
-
-        .link-btn {
-          display: inline-block;
-          margin-right: 15px;
-          color: #3498db;
-          text-decoration: none;
-          padding: 5px 10px;
-          border: 1px solid #3498db;
-          border-radius: 4px;
-        }
-
-        .link-btn:hover {
-          background-color: #f0f8ff;
+        select:focus, input[type="checkbox"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
 
         .option-group {
-          background-color: #f9f9f9;
-          padding: 15px;
-          border-radius: 5px;
-          margin-top: 15px;
-          border-left: 3px solid #3498db;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 15px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .radio-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .radio-option input {
+            margin-right: 8px;
         }
 
         .disabled-option {
-          opacity: 0.6;
-          pointer-events: none;
+            opacity: 0.6;
+            pointer-events: none;
         }
-        
-        /* 新增表格样式 */
-        .param-table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 15px 0;
+
+        button {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: var(--transition);
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
-        .param-table th, .param-table td {
-          border: 1px solid #ddd;
-          padding: 8px;
-          text-align: left;
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
-        
-        .param-table th {
-          background-color: #f2f2f2;
-          font-weight: bold;
+
+        .version-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--success-color);
         }
-        
-        .param-table tr:nth-child(even) {
-          background-color: #f9f9f9;
+
+        .code-section {
+            margin-top: 30px;
+            display: none;
         }
-        
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+        }
+
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 20px;
+            transition: var(--transition);
+            color: var(--light-text);
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab button.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: white;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: none;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            position: relative;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-color);
+        }
+
         .gradle-tabs {
-          margin-top: 20px;
+            margin-top: 20px;
         }
-        
-        .gradle-tabcontent {
-          display: none;
-        }
-        
-        .gradle-tabcontent.active {
-          display: block;
-        }
-        
+
         .gradle-tabs-buttons {
-          display: flex;
-          margin-bottom: 10px;
+            display: flex;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .gradle-tab-btn {
-          padding: 8px 16px;
-          background-color: #f1f1f1;
-          border: 1px solid #ccc;
-          cursor: pointer;
-          margin-right: 5px;
-          border-radius: 5px 5px 0 0;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            transition: var(--transition);
+            color: var(--light-text);
         }
-        
+
         .gradle-tab-btn.active {
-          background-color: #3498db;
-          color: white;
-          border-bottom: none;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-bottom: none;
+        }
+
+        .gradle-tabcontent {
+            display: none;
+        }
+
+        .gradle-tabcontent.active {
+            display: block;
+        }
+
+        .link-btn {
+            display: inline-block;
+            margin-right: 15px;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .link-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .callback-url {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .param-table th, .param-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .param-table th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+
+        .param-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        @media (max-width: 768px) {
+            .config-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container" id="doc_oversea">
+<div class="container">
     <h1>SDK 管理平台</h1>
-    <div class="form-group">
-        <label for="region">选择地区:</label>
-        <select id="region" onchange="updateRegionOptions()">
-            <option value="hk">香港</option>
-            <option value="us">北美</option>
-            <option value="rus">俄罗斯</option>
-        </select>
+
+    <div class="config-section">
+        <div class="form-group">
+            <label for="region">选择地区:</label>
+            <select id="region" onchange="updateRegionOptions()">
+                <option value="hk">香港</option>
+                <option value="us">北美</option>
+                <option value="rus">俄罗斯</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="system">选择体系:</label>
+            <select id="system" onchange="hideCodeSection()">
+                <option value="halechou">正版SDK</option>
+                <option value="fakeip">领航版SDK</option>
+                <option value="commercial">市场版SDK</option>
+            </select>
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="system">选择体系:</label>
-        <select id="system">
-            <option value="halechou">正版SDK</option>
-            <option value="fakeip">领航版SDK</option>
-            <option value="commercial">市场版SDK</option>
-        </select>
-    </div>
-
-    <div id="loginOptions" class="option-group">
         <label>选择登录方式:</label>
         <div class="radio-group">
             <div class="radio-option">
-                <input type="checkbox" id="login_google" name="loginPlatform" value="google" checked>
-                <label for="login_google" style="display: inline; font-weight: normal;">Google</label>
+                <input type="checkbox" id="login_google" name="loginPlatform" value="google">
+                <label for="login_google"
+                       style="display: inline; font-weight: normal;">Google</label>
             </div>
             <div class="radio-option">
                 <input type="checkbox" id="login_vkid" name="loginPlatform" value="vkid">
                 <label for="login_vkid" style="display: inline; font-weight: normal;">VK ID</label>
             </div>
+            <div class="radio-option">
+                <input type="checkbox" id="login_fb" name="loginPlatform" value="fb">
+                <label for="login_fb" style="display: inline; font-weight: normal;">Facebook</label>
+            </div>
         </div>
     </div>
 
-    <div id="payOptions" class="option-group">
+    <div class="form-group">
         <label>选择支付方式:</label>
         <div class="radio-group">
             <div class="radio-option">
-                <input type="checkbox" id="pay_google" name="payPlatform" value="google" checked>
+                <input type="checkbox" id="pay_google" name="payPlatform" value="google">
                 <label for="pay_google" style="display: inline; font-weight: normal;">Google</label>
             </div>
             <div class="radio-option">
@@ -282,41 +400,62 @@
     </div>
 
     <div class="form-group">
-        <label for="system">选择广告:</label>
-        <label>
-            <input type="checkbox" id="enableAds" onchange="toggleAdOptions()"> 接入广告
-        </label>
+        <label>选择数据统计:</label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="checkbox" id="track_adjust" name="trackPlatform" value="adjust">
+                <label for="track_adjust"
+                       style="display: inline; font-weight: normal;">Adjust</label>
+            </div>
+            <div class="radio-option">
+                <input type="checkbox" id="track_firebase" name="trackPlatform" value="firebase">
+                <label for="track_firebase"
+                       style="display: inline; font-weight: normal;">Firebase</label>
+            </div>
+            <div class="radio-option">
+                <input type="checkbox" id="track_reli" name="trackPlatform" value="reli">
+                <label for="track_reli" style="display: inline; font-weight: normal;">Reli</label>
+            </div>
+            <div class="radio-option">
+                <input type="checkbox" id="track_tiktok" name="trackPlatform" value="tiktok">
+                <label for="track_tiktok"
+                       style="display: inline; font-weight: normal;">TikTok</label>
+            </div>
+        </div>
+    </div>
 
-        <div id="adOptions" style="display: none; margin-top: 15px;">
+    <div class="form-group">
+        <label>选择广告:</label>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="checkbox" id="enableAds" name="adPlatform"
+                       onchange="toggleAdOptions()">
+                <label for="enableAds"
+                       style="display: inline; font-weight: normal;">接入广告</label>
+            </div>
+        </div>
+
+        <div id="adPlatformOptions" style="display: none; margin-top: 15px;">
             <label>选择广告平台:</label>
             <div class="radio-group">
                 <div class="radio-option">
-                    <input type="radio" id="topon" name="adPlatform" value="topon" checked>
+                    <input type="checkbox" id="topon" name="adPlatformType" value="topon" checked>
                     <label for="topon" style="display: inline; font-weight: normal;">TopOn</label>
-                </div>
-                <div class="radio-option">
-                    <input type="radio" id="max" name="adPlatform" value="max">
-                    <label for="max" style="display: inline; font-weight: normal;">MAX</label>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="version-info">
-        <h3>当前 SDK 版本: v2.5.2.2</h3>
+        <h3>当前 SDK 版本: v2.5.3.0-SNAPSHOT</h3>
         <div class="code-block">
-            <pre style="white-space: pre-wrap; background: #f5f5f5; padding: 15px; border-radius: 5px;">
+            <pre style="white-space: pre-wrap; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 5px;">
 更新内容
 
-## 2.5.2.1
-- 登录文字描述添加
-- 支持北美体系
-
-## 2.5.2.2
-1、区号调整 支持搜索
-2、账号登录注册优化（输入账号后添加判断）
-3、游客可访问支付
-4、部分bug修复
+## 2.5.3.0-SNAPSHOT
+- 支持多地区配置
+- 优化登录和支付选项逻辑
+- 改进代码生成功能
 
 <strong>对接变动：</strong>
 在初始化接口添加参数platformType：
@@ -334,10 +473,10 @@ request.setPlatformType(platformType);
         <div>
             <a href="https://github.com/fjlingliu/android-sdk-master/blob/main/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md"
                target="_blank" class="link-btn">查看更新日志</a>
-            <a href=" https://github.com/fjlingliu/android-sdk-master/blob/main/%E5%B9%BF%E5%91%8A%E5%AF%B9%E6%8E%A5%E6%96%87%E6%A1%A3.md"
+            <a href="https://github.com/fjlingliu/android-sdk-master/blob/main/%E5%B9%BF%E5%91%8A%E5%AF%B9%E6%8E%A5%E6%96%87%E6%A1%A3.md"
                target="_blank" class="link-btn">广告对接接口</a>
             <a href="https://github.com/fjlingliu/android-sdk-master/tree/main" target="_blank"
-               class="link-btn">sdk对接文档</a>
+               class="link-btn">SDK对接文档</a>
             <a href="https://github.com/fjlingliu/android-sdk-master/tree/main/demo"
                target="_blank"
                class="link-btn">查看 Demo</a>
@@ -362,21 +501,29 @@ request.setPlatformType(platformType);
         <div id="gradle" class="tabcontent" style="display: block;">
             <div class="gradle-tabs">
                 <div class="gradle-tabs-buttons">
-                    <button class="gradle-tab-btn active" onclick="openGradleTab('projectGradle')">项目级 build.gradle</button>
-                    <button class="gradle-tab-btn" onclick="openGradleTab('moduleGradle')">模块级 build.gradle</button>
+                    <button class="gradle-tab-btn active" onclick="openGradleTab('projectGradle')">
+                        项目级 build.gradle
+                    </button>
+                    <button class="gradle-tab-btn" onclick="openGradleTab('moduleGradle')">模块级
+                        build.gradle
+                    </button>
                 </div>
 
                 <div id="projectGradle" class="gradle-tabcontent active">
                     <div class="code-block">
-                        <button class="copy-btn" onclick="copyToClipboard('projectGradleCode')">复制</button>
-                        <div id="projectGradleCode"></div>
+                        <button class="copy-btn" onclick="copyToClipboard('projectGradleCode')">
+                            复制
+                        </button>
+                        <pre id="projectGradleCode"></pre>
                     </div>
                 </div>
 
                 <div id="moduleGradle" class="gradle-tabcontent">
                     <div class="code-block">
-                        <button class="copy-btn" onclick="copyToClipboard('moduleGradleCode')">复制</button>
-                        <div id="moduleGradleCode"></div>
+                        <button class="copy-btn" onclick="copyToClipboard('moduleGradleCode')">
+                            复制
+                        </button>
+                        <pre id="moduleGradleCode"></pre>
                     </div>
                 </div>
             </div>
@@ -385,14 +532,14 @@ request.setPlatformType(platformType);
         <div id="strings" class="tabcontent">
             <div class="code-block">
                 <button class="copy-btn" onclick="copyToClipboard('stringsCode')">复制</button>
-                <div id="stringsCode"></div>
+                <pre id="stringsCode"></pre>
             </div>
         </div>
 
         <div id="client" class="tabcontent">
             <div class="code-block">
                 <button class="copy-btn" onclick="copyToClipboard('clientCode')">复制</button>
-                <div id="clientCode"></div>
+                <pre id="clientCode"></pre>
             </div>
         </div>
 
@@ -411,22 +558,29 @@ request.setPlatformType(platformType);
         updateRegionOptions();
     });
 
+    function hideCodeSection() {
+        document.getElementById('codeSection').style.display = 'none';
+    }
+
     function updateRegionOptions() {
         const region = document.getElementById('region').value;
         const loginGoogle = document.getElementById('login_google');
         const loginVkid = document.getElementById('login_vkid');
+        const loginFb = document.getElementById('login_fb');
         const payGoogle = document.getElementById('pay_google');
         const payRus = document.getElementById('pay_rus');
 
         // 移除所有禁用状态
         loginGoogle.classList.remove('disabled-option');
         loginVkid.classList.remove('disabled-option');
+        loginFb.classList.remove('disabled-option');
         payGoogle.classList.remove('disabled-option');
         payRus.classList.remove('disabled-option');
 
         // 重置所有选项
         loginGoogle.checked = false;
         loginVkid.checked = false;
+        loginFb.checked = false;
         payGoogle.checked = false;
         payRus.checked = false;
 
@@ -434,14 +588,12 @@ request.setPlatformType(platformType);
             // 俄罗斯地区
             loginVkid.checked = true;
             loginVkid.classList.add('disabled-option');
-
             payRus.checked = true;
             payRus.classList.add('disabled-option');
         } else {
             // 香港和北美地区
             loginGoogle.checked = true;
             loginGoogle.classList.add('disabled-option');
-
             payGoogle.checked = true;
             payGoogle.classList.add('disabled-option');
         }
@@ -449,7 +601,7 @@ request.setPlatformType(platformType);
 
     function toggleAdOptions() {
         const enableAds = document.getElementById('enableAds').checked;
-        document.getElementById('adOptions').style.display = enableAds ? 'block' : 'none';
+        document.getElementById('adPlatformOptions').style.display = enableAds ? 'block' : 'none';
     }
 
     function generateCode() {
@@ -457,11 +609,12 @@ request.setPlatformType(platformType);
         const system = document.getElementById('system').value;
         const callbackUrl = document.getElementById('callback-url');
         const enableAds = document.getElementById('enableAds').checked;
-        const adPlatform = enableAds ? document.querySelector('input[name="adPlatform"]:checked').value : null;
+        const adPlatform = enableAds ? document.querySelector('input[name="adPlatformType"]:checked').value : null;
 
-        // 获取登录和支付选项
+        // 获取登录、支付和统计选项
         const loginOptions = [];
         const payOptions = [];
+        const trackOptions = [];
 
         document.querySelectorAll('input[name="loginPlatform"]:checked').forEach(function(checkbox) {
             loginOptions.push(checkbox.value);
@@ -471,14 +624,28 @@ request.setPlatformType(platformType);
             payOptions.push(checkbox.value);
         });
 
+        document.querySelectorAll('input[name="trackPlatform"]:checked').forEach(function(checkbox) {
+            trackOptions.push(checkbox.value);
+        });
+
+        // 确定包名前缀
+        let packagePrefix = '';
+        if (system === 'halechou') {
+            packagePrefix = 'com.halechou.sdk';
+        } else if (system === 'fakeip') {
+            packagePrefix = 'com.pseudos.game';
+        } else if (system === 'commercial') {
+            packagePrefix = 'com.littleelephant.sdk';
+        }
+
         // 回调地址
         let callbackContent = '';
         if (system === 'halechou') {
-            callbackContent = 'google页面回调地址:<label for="callback-url" style="display: inline; font-weight: normal;"> <a href="">https://pay-api.halesdk.com/gateway/getOrder.jhtml</a> </label>\n';
+            callbackContent = 'Google页面回调地址: <a href="https://pay-api.halesdk.com/gateway/getOrder.jhtml">https://pay-api.halesdk.com/gateway/getOrder.jhtml</a>';
         } else if (system === 'fakeip') {
-            callbackContent = 'google页面回调地址:<label for="callback-url" style="display: inline; font-weight: normal;"> <a href="">https://pay.cloakdev.com/gateway/selectData.jhtml </a> </label>\n';
+            callbackContent = 'Google页面回调地址: <a href="https://pay.cloakdev.com/gateway/selectData.jhtml">https://pay.cloakdev.com/gateway/selectData.jhtml</a>';
         } else if (system === 'commercial') {
-            callbackContent = 'google页面回调地址:<label for="callback-url" style="display: inline; font-weight: normal;"> <a href="">https://pay.xfxmkt.com/gateway/getOrder.jhtml </a> </label>\n';
+            callbackContent = 'Google页面回调地址: <a href="https://pay.xfxmkt.com/gateway/getOrder.jhtml">https://pay.xfxmkt.com/gateway/getOrder.jhtml</a>';
         }
 
         callbackUrl.innerHTML = callbackContent;
@@ -493,163 +660,260 @@ request.setPlatformType(platformType);
         }
         //适配器仓库
         maven {
-            url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
-            credentials {
-                username = "fjlingliu"
-                password = "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"
-            }
+            url "https://code-wan.qu06.cn/repository/maven-releases/"
         }
-        ${region === 'rus' ? `//俄罗斯仓库
+        maven {
+            url "https://code-wan.qu06.cn/repository/maven-snapshots/"
+        }`;
+
+        // 添加仓库地址
+        if (loginOptions.includes('vkid')) {
+            projectGradleCode += `
+        //俄罗斯仓库
         maven {
             url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
-        }` : ''}
-        ${enableAds && adPlatform === 'topon' ? 
-        `//topon 广告仓库(不接广告可不必添加)
+        }
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/vkid-sdk-android/")
+        }
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/vk-id-captcha/android/")
+        }`;
+        }
+
+        if (trackOptions.includes('tiktok')) {
+            projectGradleCode += `
+        //tiktok 仓库
+        maven { url 'https://jitpack.io' }`;
+        }
+
+        if (enableAds && adPlatform === 'topon') {
+            projectGradleCode += `
+        //topon 广告仓库
         flatDir {
-            dirs \\'libs\\'
+            dirs 'libs'
         }
         maven {
             url "https://jfrog.anythinktech.com/artifactory/overseas_sdk"
         }
-        //tiktok 仓库
-        maven { url 'https://jitpack.io' } // add this line!!` : ''}
+        maven {
+            url "https://jfrog.anythinktech.com/artifactory/debugger"
+        }`;
+        }
+
+        projectGradleCode += `
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.10.0'
+        classpath 'com.android.tools.build:gradle:8.10.0'`;
+
+        // 添加插件引用
+        if (loginOptions.includes('google')) {
+            projectGradleCode += `
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
-        ${region === 'rus' ? 'classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"' : ''}
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'`;
+        }
+
+        if (loginOptions.includes('vkid')) {
+            projectGradleCode += `
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"`;
+        }
+
+        projectGradleCode += `
     }
 }`;
+
         document.getElementById('projectGradleCode').textContent = projectGradleCode;
 
         // 生成模块级 Gradle 代码
-        let moduleGradleCode = `${region === 'rus' ?
-`apply plugin: 'com.android.application'
+        let moduleGradleCode = `apply plugin: 'com.android.application'`;
+
+        // 添加插件申明
+        if (loginOptions.includes('google')) {
+            moduleGradleCode += `
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'org.jetbrains.kotlin.android'` :
-`apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'`}
+apply plugin: 'com.google.firebase.crashlytics'`;
+        }
+
+        if (loginOptions.includes('vkid')) {
+            moduleGradleCode += `
+apply plugin: 'org.jetbrains.kotlin.android'`;
+        }
+
+        moduleGradleCode += `
 
 android {
-    defaultConfig {
-        ${region === 'rus' ?
-`        manifestPlaceholders = [
+    defaultConfig {`;
+
+        if (region === 'rus') {
+            moduleGradleCode += `
+        manifestPlaceholders = [
             VKIDRedirectHost: "oauth.vk.com",
             VKIDRedirectScheme: "vk54148857", // 格式: vk{app_id}
             VKIDClientID: "54148857",
             VKIDClientSecret: "o9LelE9M3X84eBwkg8zb"
-        ]` : ''}
+        ]`;
+        }
+
+        moduleGradleCode += `
     }
 }
 
-dependencies {`;
+dependencies {
+    //基础库
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.code.gson:gson:2.8.9'`;
 
-        // 核心库
-        if (system === 'halechou') {
-            moduleGradleCode += `\n    //核心库\n    implementation 'com.halechou.sdk:core:2.5.2.2'`;
-        } else if (system === 'fakeip') {
-            moduleGradleCode += `\n    //核心库\n    implementation 'com.pseudos.game:core:2.5.2.2'`;
-        } else if (system === 'commercial') {
-            moduleGradleCode += `\n    //核心库\n    implementation 'com.littleelephant.sdk:core:2.5.2.2'`;
-        }
+        // 核心库和基础库
+        moduleGradleCode += `
+    //核心库
+    implementation '${packagePrefix}:core:2.5.3.0-SNAPSHOT'
+    //基础库
+    implementation '${packagePrefix}:base:1.0.0.2-SNAPSHOT'`;
 
         // 登录库
+        if (loginOptions.includes('google')) {
+            moduleGradleCode += `
+    //Google登录库
+    implementation '${packagePrefix}:login-google:1.0.0.1-SNAPSHOT'`;
+        }
+
         if (loginOptions.includes('vkid')) {
-            if (system === 'halechou') {
-                moduleGradleCode += `\n    //VK ID登录库\n    implementation 'com.halechou.sdk:login-vkid:1.0.0.0'`;
-            } else if (system === 'fakeip') {
-                moduleGradleCode += `\n    //VK ID登录库\n    implementation 'com.pseudos.game:login-vkid:1.0.0.0'`;
-            } else if (system === 'commercial') {
-                moduleGradleCode += `\n    //VK ID登录库\n    implementation 'com.littleelephant.sdk:login-vkid:1.0.0.0'`;
-            }
+            moduleGradleCode += `
+    //VK ID登录库
+    implementation '${packagePrefix}:login-vkid:1.0.0.1-SNAPSHOT'`;
+        }
+
+        if (loginOptions.includes('fb')) {
+            moduleGradleCode += `
+    //Facebook登录库
+    implementation '${packagePrefix}:login-fb:1.0.0.1-SNAPSHOT'`;
         }
 
         // 支付库
         if (payOptions.includes('google')) {
-            if (system === 'halechou') {
-                moduleGradleCode += `\n    //Google支付库\n    implementation 'com.halechou.sdk:pay-google:1.0.1.0'`;
-            } else if (system === 'fakeip') {
-                moduleGradleCode += `\n    //Google支付库\n    implementation 'com.pseudos.game:pay-google:1.0.1.0'`;
-            } else if (system === 'commercial') {
-                moduleGradleCode += `\n    //Google支付库\n    implementation 'com.littleelephant.sdk:pay-google:1.0.1.0'`;
-            }
+            moduleGradleCode += `
+    //Google支付库
+    implementation '${packagePrefix}:pay-google:1.0.1.0'
+    implementation 'androidx.core:core-ktx:1.17.0'`;
         }
 
         if (payOptions.includes('rus')) {
-            if (system === 'halechou') {
-                moduleGradleCode += `\n    //RUS支付库\n    implementation 'com.halechou.sdk:pay-rus:1.0.1.0'`;
-            } else if (system === 'fakeip') {
-                moduleGradleCode += `\n    //RUS支付库\n    implementation 'com.pseudos.game:pay-rus:1.0.1.0'`;
-            } else if (system === 'commercial') {
-                moduleGradleCode += `\n    //RUS支付库\n    implementation 'com.littleelephant.sdk:pay-rus:1.0.1.0'`;
-            }
+            moduleGradleCode += `
+    //RUS支付库
+    implementation '${packagePrefix}:pay-rus:1.0.0.1-SNAPSHOT'
+    implementation 'androidx.core:core-ktx:1.17.0'`;
+        }
+
+        // 数据统计库
+        if (trackOptions.includes('adjust')) {
+            moduleGradleCode += `
+    //Adjust数据统计库
+    implementation '${packagePrefix}:track-adjust:1.0.0.1-SNAPSHOT'`;
+        }
+
+        if (trackOptions.includes('firebase')) {
+            moduleGradleCode += `
+    //Firebase数据统计库
+    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'`;
+        }
+
+        if (trackOptions.includes('reli')) {
+            moduleGradleCode += `
+    //Reli数据统计库
+    implementation '${packagePrefix}:track-reli:1.0.0.1-SNAPSHOT'`;
+        }
+
+        if (trackOptions.includes('tiktok')) {
+            moduleGradleCode += `
+    //TikTok数据统计库
+    implementation '${packagePrefix}:track-tiktok:1.0.0.1-SNAPSHOT'`;
+        }
+
+        // 广告库
+        if (enableAds && adPlatform === 'topon') {
+            moduleGradleCode += `
+    //TopOn广告库
+    implementation '${packagePrefix}:ads-topon:1.0.0.9'`;
         }
 
         moduleGradleCode += `
-    //基础库
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.code.gson:gson:2.8.9'`;
+}`;
 
-        if (enableAds) {
-            if (adPlatform === 'topon') {
-                if (system === 'halechou') {
-                    moduleGradleCode += `\n    //广告适配器，（无需广告，请勿引用） \n    implementation 'com.halechou.sdk:ads-topon:1.0.0.9'`;
-                } else if (system === 'fakeip') {
-                    moduleGradleCode += `\n    //广告适配器，（无需广告，请勿引用） \n    implementation 'com.pseudos.game:ads-topon:1.0.0.9'`;
-                } else if (system === 'commercial') {
-                    moduleGradleCode += `\n    //广告适配器，（无需广告，请勿引用） \n    implementation 'com.littleelephant.sdk:ads-topon:1.0.0.9'`;
-                }
-            }
-        }
-
-        moduleGradleCode += `\n}`;
         document.getElementById('moduleGradleCode').textContent = moduleGradleCode;
 
         // 生成 strings.xml 代码
         let stringsCode = `<resources>
-    <!-- SDK登录配置 -->
-    <string name="google_web_client_id">Google Web 应用类型的客户端 ID</string>
-    //fb登录 如果没有fb登录 可将3个参数都都设置为空即可
-    <string name="facebook_app_id">你的fb app id（示例：123456）</string>
-    <string name="fb_login_protocol_scheme">fb加你的fb app id（示例：fb123456）</string>
-    <string name="facebook_client_token">客户端口令</string>
-    <!-- tiktok参数 -->
-    <string name="tt_app_id"></string>
-    //如果由对接adjust 就配置此字段
-    <string name="adjust_app_key"></string>
     <!-- 应用唯一标识 -->
-    <string name="application_id">your application id</string>`;
+    <string name="application_id">your_application_id</string>`;
 
-        if (enableAds) {
-            stringsCode += `\n\n    <!-- 广告配置 -->
-    <!-- applovin广告sdk key （如没有就默认就行）-->
-    <string name="applovin_sdk_key">OCpD3RM3hfIxQuzngoQdElzri8Li3U67KJTwg4B_NPem3GSwBv1OCw9xh3E3sRptsOop_FzUgIuzmK2RxFtKCR</string>
-    <!-- google广告id (如没有就默认就行) -->
-    <string name="gg_admob_app_id">ca-app-pub-4430438031018910~6684066455</string>`;
+        // 登录配置
+        if (loginOptions.includes('google')) {
+            stringsCode += `
+    <!-- Google登录配置 -->
+    <string name="google_web_client_id">your_google_web_client_id</string>`;
         }
 
-        stringsCode += `\n</resources>`;
+        if (loginOptions.includes('fb')) {
+            stringsCode += `
+    <!-- Facebook登录配置 -->
+    <string name="facebook_app_id">your_facebook_app_id</string>
+    <string name="fb_login_protocol_scheme">fb_your_facebook_app_id</string>
+    <string name="facebook_client_token">your_facebook_client_token</string>`;
+        }
+
+        if (payOptions.includes('rus')) {
+            stringsCode += `
+    <!-- RUS支付配置 -->
+    <string name="rus_console_appid">your_rus_console_appid</string>
+    <string name="rus_deeplink_scheme">your_rus_deeplink_scheme</string>`;
+        }
+
+        // 数据统计配置
+        if (trackOptions.includes('adjust')) {
+            stringsCode += `
+    <!-- Adjust配置 -->
+    <string name="adjust_app_key">your_adjust_app_key</string>`;
+        }
+
+        if (trackOptions.includes('tiktok')) {
+            stringsCode += `
+    <!-- TikTok配置 -->
+    <string name="tt_app_id">your_tiktok_app_id</string>`;
+        }
+
+        // 广告配置
+        if (enableAds && adPlatform === 'topon') {
+            stringsCode += `
+    <!-- 广告配置 -->
+    <string name="applovin_sdk_key">your_applovin_sdk_key</string>
+    <string name="gg_admob_app_id">your_google_admob_app_id</string>`;
+        }
+
+        stringsCode += `
+</resources>`;
+
         document.getElementById('stringsCode').textContent = stringsCode;
 
         // 生成客户端对接代码
-        let clientCode = `
-sdk对接详情请见在线文档 https://github.com/fjlingliu/android-sdk-master/tree/main
+        let clientCode = `SDK对接详情请见在线文档: https://github.com/fjlingliu/android-sdk-master/tree/main
 
-地区配置: ${region === 'hk' ? '香港' : region === 'us' ? '北美' : '俄罗斯'}
-体系: ${system === 'halechou' ? '正版SDK' : system === 'fakeip' ? '领航版SDK' : '市场版SDK'}
-登录方式: ${loginOptions.join(', ')}
-支付方式: ${payOptions.join(', ')}
-${enableAds ? '广告平台: ' + adPlatform : '未接入广告'}
-        `;
+配置信息:
+- 地区: ${region === 'hk' ? '香港' : region === 'us' ? '北美' : '俄罗斯'}
+- 体系: ${system === 'halechou' ? '正版SDK' : system === 'fakeip' ? '领航版SDK' : '市场版SDK'}
+- 登录方式: ${loginOptions.join(', ')}
+- 支付方式: ${payOptions.join(', ')}
+- 数据统计: ${trackOptions.join(', ')}
+- ${enableAds ? '广告平台: ' + adPlatform : '未接入广告'}
+
+初始化代码示例:
+InitRequest request = new InitRequest();
+request.setPlatformType(${region === 'hk' ? 'XJ_TYPE_PLATFORM_HK' : region === 'us' ? 'XJ_TYPE_PLATFORM_US' : 'XJ_TYPE_PLATFORM_RUS'});
+// 其他初始化配置...`;
 
         document.getElementById('clientCode').textContent = clientCode;
 
@@ -704,39 +968,22 @@ ${enableAds ? '广告平台: ' + adPlatform : '未接入广告'}
   </tr>
   <tr>
     <td>code</td>
-    <td>状态码（100表示成功）</td>
+    <td>状态码（200：成功，其他：失败）</td>
+  </tr>
+  <tr>
+    <td>message</td>
+    <td>返回信息</td>
   </tr>
   <tr>
     <td>data</td>
-    <td>用户ID</td>
-  </tr>
-  <tr>
-    <td>msg</td>
-    <td>错误信息</td>
+    <td>返回数据</td>
   </tr>
 </table>
 
-返回值说明:
-<table class="param-table">
-  <tr>
-    <th>code值</th>
-    <th>说明</th>
-  </tr>
-  <tr>
-    <td>100</td>
-    <td>成功</td>
-  </tr>
-  <tr>
-    <td>>100</td>
-    <td>失败</td>
-  </tr>
-</table>
+二、订单验证
 
----------------------------------------------------------------------------------------------
-
-二、支付结果通知
-
-请求方式: POST（由研发提供回调地址，在心迹后台配置）
+接口地址: https://${apiUrl}/htmlApi/checkHtmlOrder.jhtml
+请求方式: POST
 
 请求参数:
 <table class="param-table">
@@ -744,65 +991,47 @@ ${enableAds ? '广告平台: ' + adPlatform : '未接入广告'}
     <th>字段名</th>
     <th>变量名</th>
     <th>说明</th>
+    <th>必填</th>
   </tr>
   <tr>
-    <td>订单号</td>
+    <td>token</td>
+    <td>token</td>
+    <td>用户token</td>
+    <td>是</td>
+  </tr>
+  <tr>
     <td>orderId</td>
-    <td>此订单号由开发者生成，可用于对账、客服支持等</td>
+    <td>orderId</td>
+    <td>订单号</td>
+    <td>是</td>
   </tr>
   <tr>
-    <td>玩家帐号</td>
-    <td>userNo</td>
-    <td>玩家登录成功客户端回传的用户id</td>
-  </tr>
-  <tr>
-    <td>充值金额</td>
-    <td>amount</td>
-    <td>订单充值的金额，单位：元（只接收>=1的整数位金额）</td>
-  </tr>
-  <tr>
-    <td>充值金额(美分)</td>
-    <td>amountUsd</td>
-    <td>订单充值的金额，单位：美分（只接收>=1的整数位金额）</td>
-  </tr>
-  <tr>
-    <td>扩展参数</td>
-    <td>extra</td>
-    <td>此参数调用sdk传入的扩展参数，原样传回</td>
-  </tr>
-  <tr>
-    <td>签名验证</td>
-    <td>flag</td>
-    <td>MD5(orderId+userNo+amount+extra+PKEY)</td>
-  </tr>
-  <tr>
-    <td>支付方式商户ID</td>
-    <td>merchantChannelId</td>
-    <td>2013:Apple支付 2014:Apple沙箱测试 3006:MyCard支付 3009:PayPal支付 3021:Google支付</td>
+    <td>pid</td>
+    <td>pid</td>
+    <td>由心迹平台提供的参数</td>
+    <td>是</td>
   </tr>
 </table>
 
-返回值说明:
+返回参数:
 <table class="param-table">
   <tr>
-    <th>code值</th>
+    <th>字段名</th>
     <th>说明</th>
   </tr>
   <tr>
-    <td>100</td>
-    <td>成功</td>
+    <td>code</td>
+    <td>状态码（200：成功，其他：失败）</td>
   </tr>
   <tr>
-    <td>>100</td>
-    <td>失败</td>
+    <td>message</td>
+    <td>返回信息</td>
   </tr>
-</table>
-
-注意: 
-1. 签名结果为了方便比较，统一转换为大写字符。"+"符号不参与签名
-2. 研发收到通知时，必须给予响应，返回信息格式: {"code":"100","data":"成功","msg":""}
-3. 如开发者无响应，后台会进入每三分钟一次的补单通知，需对订单唯一性做判断，避免重复补单
-4. 厂商必须对内购id的实际金额和下游传的订单金额进行比较`;
+  <tr>
+    <td>data</td>
+    <td>返回数据</td>
+  </tr>
+</table>`;
 
         document.getElementById('serverCode').innerHTML = serverCode;
 
@@ -824,33 +1053,32 @@ ${enableAds ? '广告平台: ' + adPlatform : '未接入广告'}
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    
+
     function openGradleTab(tabName) {
         const gradleTabs = document.getElementsByClassName("gradle-tabcontent");
         for (let i = 0; i < gradleTabs.length; i++) {
             gradleTabs[i].classList.remove("active");
         }
-        
-        const gradleButtons = document.getElementsByClassName("gradle-tab-btn");
-        for (let i = 0; i < gradleButtons.length; i++) {
-            gradleButtons[i].classList.remove("active");
+
+        const gradleTabBtns = document.getElementsByClassName("gradle-tab-btn");
+        for (let i = 0; i < gradleTabBtns.length; i++) {
+            gradleTabBtns[i].classList.remove("active");
         }
-        
+
         document.getElementById(tabName).classList.add("active");
         event.currentTarget.classList.add("active");
     }
 
     function copyToClipboard(elementId) {
-        const element = document.getElementById(elementId);
-        const text = element.textContent;
-
-        navigator.clipboard.writeText(text).then(() => {
-            const btn = element.previousElementSibling;
+        const text = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(text).then(function() {
+            const btn = event.target;
+            const originalText = btn.textContent;
             btn.textContent = '已复制!';
-            setTimeout(() => {
-                btn.textContent = '复制';
+            setTimeout(function() {
+                btn.textContent = originalText;
             }, 2000);
-        }).catch(err => {
+        }, function(err) {
             console.error('复制失败: ', err);
         });
     }
