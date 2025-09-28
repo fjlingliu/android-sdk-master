@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">HKHFDemo</string>
+
+    <!--  google参数（必填） -->
+    <string name="google_web_client_id">24337588735-b1jljppdt070ih05nm1ds5v2l6vbb2ca.apps.googleusercontent.com</string>
+    <!--  fb登录参数（无fb登录默认值即可）  -->
+    <string name="facebook_app_id">419031847341915</string>
+    <string name="facebook_client_token">c4801e2d336364bcff40289172b5b987</string>
+    <string name="fb_login_protocol_scheme">fb419031847341915</string>
+
+    <!--  adjust 事件（无此功能默认即可） -->
+    <string name="adjust_app_key">9jp58df3qjgg</string>
+    <!--  应用唯一标志 app id （必填） -->
+    <string name="application_id">com.xinji.test</string>
+
+    <!--  tiktok事件自归因  -->
+    <string name="tt_app_id"></string>
+
+    <!--   applovin广告sdk key （无广告忽略此字段）-->
+    <string name="applovin_sdk_key">OCpD3RM3hfIxQuzngoQdElzri8Li3U67KJTwg4B_NPem3GSwBv1OCw9xh3E3sRptsOop_FzUgIuzmK2RxFtKCR</string>
+    <!--  google广告id （无广告忽略此字段） -->
+    <string name="gg_admob_app_id">ca-app-pub-4430438031018910~6684066455</string>
+</resources>

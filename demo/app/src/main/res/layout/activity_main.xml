@@ -1,0 +1,140 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_game"
+
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/rg_platform"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_hk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="香港" />
+
+            <RadioButton
+                android:id="@+id/rb_us"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/view_margin"
+                android:text="北美" />
+
+            <RadioButton
+                android:id="@+id/rb_ru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/view_margin"
+                android:text="欧罗斯" />
+        </RadioGroup>
+
+
+        <EditText
+            android:id="@+id/edt_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="url" />
+
+        <EditText
+            android:id="@+id/edt_pid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="pid" />
+
+
+        <EditText
+            android:id="@+id/edt_gameName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="gameName" />
+
+        <EditText
+            android:id="@+id/edt_gameId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="gameId" />
+        <EditText
+            android:id="@+id/edt_cent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="cent"
+            android:text="100"
+            />
+        <EditText
+            android:id="@+id/edt_rmb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="6"
+            android:hint="rmb" />
+        <Button
+            android:id="@+id/bt_fb_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="facebook" />
+        <Button
+            android:id="@+id/bt_google_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="google" />
+        <Button
+            android:id="@+id/bt_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="授权" />
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登录" />
+
+        <Button
+            android:id="@+id/bt_bind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="绑定" />
+
+        <Button
+            android:id="@+id/bt_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="立即充值" />
+
+        <Button
+            android:id="@+id/bt_pay_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Google充值" />
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提交角色信息" />
+        <Button
+            android:id="@+id/bt_show_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="展示广告" />
+
+        <Button
+            android:id="@+id/bt_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="注销登录" />
+    </LinearLayout>
+
+</ScrollView>

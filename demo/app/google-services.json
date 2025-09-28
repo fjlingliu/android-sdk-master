@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "24337588735",
+    "project_id": "xinjitest",
+    "storage_bucket": "xinjitest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24337588735:android:e9d55063e0adb1290e47ca",
+        "android_client_info": {
+          "package_name": "com.xinji.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24337588735-1js5udfukvqi84ld48rojisujvmummfi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xinji.test",
+            "certificate_hash": "5d50d15d9057ef5d15a8b0741c5a0cc0408a9944"
+          }
+        },
+        {
+          "client_id": "24337588735-b1jljppdt070ih05nm1ds5v2l6vbb2ca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd0gTVvprtfEqEl2fp-fTOERAofZ0W6QU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24337588735-b1jljppdt070ih05nm1ds5v2l6vbb2ca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
