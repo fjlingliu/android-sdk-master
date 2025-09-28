@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+//google 支付环境需要配置
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
@@ -45,6 +46,13 @@ android {
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //基础库
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+
     //todo 核心库- 根据文档下载版本去替换
     implementation 'com.xxx.xxx:core:xxxx'
     //todo 支付库- 根据文档下载版本去替换
@@ -52,16 +60,4 @@ dependencies {
 
     //todo 广告适配器，（无需广告，请勿引用）- 根据文档下载版本去替换
     implementation 'com.xxx.xxxx:ads-topon:xxxx'
-    //基础库
-    implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.13.0'
-    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    //可靠的方式来获取应用的【安装来源信息】
-    implementation 'com.android.installreferrer:installreferrer:2.2'
-    //广告id
-    implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
-    implementation 'com.google.code.gson:gson:2.8.9'
 }

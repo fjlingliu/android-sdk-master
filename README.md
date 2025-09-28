@@ -5,7 +5,7 @@
 本文档面向安卓开发者，用于指导开发者快速接入 海外SDK
 用于 Android APP
 嵌入用户中心、收费模块、广告弹窗模块，用户中心目前支持使用浩凡账号登录、facebook账号登录、amazon登录、google
-账号登录，收费模块支持支付宝、微信、google、paypal、mycard。提供多个接口给集成者调用。
+账号登录,vkid，收费模块支持支付宝、微信、google、paypal、mycard,rus。提供多个接口给集成者调用。
 
 重要提醒：
 
@@ -17,64 +17,27 @@
 
 ## 2.1 申请应用配置
 
-### 2.1.1查看出包物料
-
-<table>
-<colgroup>
-<col style="width: 35%" />
-<col style="width: 64%" />
-</colgroup>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>名称</strong></td>
-<td style="text-align: left;"><strong>值</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>包名</strong></td>
-<td style="text-align: left;">com.xx.xx</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>游戏名称</strong></td>
-<td style="text-align: left;">安卓测试</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>游戏PID</strong></td>
-<td style="text-align: left;">310000</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>内购ID</strong></td>
-<td style="text-align: left;">hfceshi1</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Facebook授权Key</strong></td>
-<td style="text-align: left;">facebook登录需要配置的参数（不用facebook可不提供）</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Adjust授权key</strong></td>
-<td style="text-align: left;">Adjust追踪配置的参数</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Tiktok自归因参数</strong></td>
-<td style="text-align: left;">xxxxxxx(不用tiktok 可不提供)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Google-services.json</strong></td>
-<td style="text-align: left;">FirebaseAndroid配置文件</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>api_key.txt</strong></td>
-<td style="text-align: left;">Amazon授权key（无amazon登录可不提供）</td>
-</tr>
-</tbody>
-</table>
-
+### 2.1.1查看出包物料(在需要对接对应功能时需找运营提供)
+| 功能         | 名称                       | 值                          |
+|:-----------|:-------------------------|:---------------------------|
+| 应用标识       | **包名**                   | com.xx.xx                  |
+| 应用信息       | **游戏名称**                 | 安卓测试                       |
+| 应用信息       | **游戏PID**                | 310000                     |
+| 支付配置       | **内购ID**                 | hfceshi1                   |
+| fb登录       | **Facebook授权Key**        | facebook登录需要配置的参数（可选）      |
+| google登录   | **google_web_client_id** | 可以从Google-services.json中获取（可选） |
+| vkid登录     | **无需额外参数**               |                （可选）            |
+| adjust数据统计 | **Adjust授权key**          | Adjust追踪配置的参数（可选）              |
+| tiktok数据统计 | **Tiktok自归因参数**          | xxxxxxx（可选）     |
+| google相关功能 | **Google-services.json** | FirebaseAndroid配置文件（可选）        |
+| rustore支付  | **rustore支付appid**       | rus_console_appid（可选）          |
 ## 2.1.2 环境要求
 
-注：最低版本不能低于35，google要求。
+注：最低版本不能低于36，google要求。
 
-compileSdkVersion 35
+compileSdkVersion 36
 
-buildToolsVersion "35.0.0"
+buildToolsVersion "36.0.0"
 
 minSdkVersion 大于等于24
 
@@ -153,26 +116,25 @@ implementation 'com.xxx.xxxx:pay-google:xxxx'
 //基础库
 implementation 'androidx.appcompat:appcompat:1.7.1'
 implementation 'com.google.android.material:material:1.13.0'
-implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
-implementation 'com.google.firebase:firebase-analytics'
-implementation 'com.google.firebase:firebase-crashlytics'
 implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-//可靠的方式来获取应用的【安装来源信息】
-implementation 'com.android.installreferrer:installreferrer:2.2'
-//广告id
-implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
 implementation 'com.google.code.gson:gson:2.8.9'
+
+//todo 具体功能添加对应的仓库
 
 ````
 
 ## 2.4 配置应用的参数配置
 
-### 2.4.1 string.xml中添加如下配置
+### 2.4.1 string.xml中完整参数标识
 
 
 
 ```
-<!--  google参数（必填） -->
+
+<!--  应用唯一标志 app id （必填） -->
+<string name="application_id"></string>
+
+<!--  google登录参数 -->
 <string name="google_web_client_id"></string>
 
 <!--  fb登录参数（无fb登录默认值即可）  -->
@@ -183,15 +145,15 @@ implementation 'com.google.code.gson:gson:2.8.9'
 <!--  adjust 事件（无此功能默认即可） -->
 <string name="adjust_app_key"></string>
 
-<!--  应用唯一标志 app id （必填） -->
-<string name="application_id"></string>
-
 <!--  tiktok事件自归因  -->
 <string name="tt_app_id"></string>
 
-<!--  applovin广告sdk key （无广告忽略此字段）-->
+<!--  rus支付参数  -->
+<string name="rus_console_appid">appid</string>
+<string name="rus_deeplink_scheme">yourappscheme（命名规格:可用包名）</string>
+
+<!--  topon广告参数-->
 <string name="applovin_sdk_key"></string>
-<!--  google广告id （无广告忽略此字段） -->
 <string name="gg_admob_app_id"></string>
 ```
 **注意：**
@@ -212,6 +174,10 @@ implementation 'com.google.code.gson:gson:2.8.9'
 
    ![](media/image1.png)
 4. **server_client_id已经废弃，请使用goolge\_web\_client\_id**
+5. rus_deeplink_scheme
+   deeplinkScheme—用于通过第三方应用程序支付后返回您的应用程序的deeplink方案
+   如果配置了，需要在mainifest主页面 <intent-filter>标签下中添加:
+   <data android:scheme="@string/rus_deeplink_scheme" />
 
 ### 2.4.2 amazon登录授权key（如不接amazon登录可忽略此步骤）
 
@@ -219,9 +185,9 @@ implementation 'com.google.code.gson:gson:2.8.9'
 
 ![](media/image2.png)
 
-### 2.4.3添加google play服务
+### 2.4.3添加google play服务(如果接入了google 登录或者支付时)
 
-在项目的顶级build.gradle文件，确保谷歌的Maven仓库包括：
+- 在项目的顶级build.gradle文件，确保谷歌的Maven仓库包括：
 
 ````
 buildscript {
@@ -261,13 +227,12 @@ buildscript {
 }
 ````
 
-### 2.5 google-services.json文件配置
-
-将配置文件移动到应用的模块（应用级）目录中。
+- google-services.json文件配置
+  将配置文件移动到应用的模块（应用级）目录中。
 
 ![](media/image3.png)
 
-### 2.6应用级build.gradle配置（app/build.gradle） 
+- 应用级build.gradle配置（app/build.gradle） 
 
 ``````
 apply plugin: 'com.android.application'
@@ -285,6 +250,9 @@ android {
 
 }
 ``````
+
+### 2.4.4添加rustore 配置(如果接入了ruStore支付)
+
 
 # 3 接口说明
 

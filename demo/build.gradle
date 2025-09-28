@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.10.0'
+        //google 支付环境需要配置
         classpath 'com.google.gms:google-services:4.3.15'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
         // NOTE: Do not place your application dependencies here; they belong
@@ -34,13 +35,9 @@ allprojects {
         //tiktok 仓库
         maven { url 'https://jitpack.io' } // add this line!!
         //适配器仓库
+
         maven {
-            url "https://maven.pkg.github.com/fjlingliu/xinjiAndroidSdk"
-            credentials {
-               //todo  根据文档去替换
-                username = "xxxx"
-                password = "xxxxx"
-            }
+            url "https://code-wan.qu06.cn/repository/maven-releases/"
         }
 
     }
