@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -12,14 +13,20 @@
             --success-color: #2ecc71;
             --warning-color: #f39c12;
             --danger-color: #e74c3c;
-            --dark-bg: #1a1a2e;
-            --darker-bg: #16213e;
-            --light-bg: #f5f5f5;
-            --text-color: #333;
-            --light-text: #f5f5f5;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --dark-bg: #0f172a;
+            --darker-bg: #0a0f1c;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(99, 102, 241, 0.3);
+            --text-color: #e2e8f0;
+            --light-text: #f8fafc;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             --transition: all 0.3s ease;
+            --glow: 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -35,12 +42,12 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
         }
 
         h1 {
@@ -51,6 +58,9 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             position: relative;
             padding-bottom: 15px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         h1:after {
@@ -74,10 +84,16 @@
 
         .form-group {
             margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(30, 41, 59, 0.5);
             padding: 20px;
             border-radius: var(--border-radius);
             border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .form-group:hover {
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
         }
 
         label {
@@ -97,12 +113,13 @@
             max-width: 300px;
             transition: var(--transition);
         }
-        /* 添加下拉选项的样式 */
+
         select option {
-            background: rgba(30, 30, 30, 0.95); /* 下拉选项背景色 */
-            color: var(--light-text); /* 下拉选项文字颜色 */
+            background: rgba(30, 30, 30, 0.95);
+            color: var(--light-text);
             padding: 10px;
         }
+
         select:focus, input[type="checkbox"]:focus {
             outline: none;
             border-color: var(--primary-color);
@@ -135,6 +152,7 @@
 
         .radio-option:hover {
             background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
         .radio-option input {
@@ -164,6 +182,7 @@
         button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
         }
 
         .version-info {
@@ -179,12 +198,17 @@
             display: none;
         }
 
+        .tab-container {
+            margin-top: 20px;
+        }
+
         .tab {
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.05);
             border-radius: var(--border-radius) var(--border-radius) 0 0;
             display: flex;
+            flex-wrap: wrap;
         }
 
         .tab button {
@@ -197,6 +221,10 @@
             color: var(--light-text);
             flex: 1;
             text-align: center;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+            min-width: 150px;
         }
 
         .tab button:hover {
@@ -248,41 +276,6 @@
             background: var(--accent-color);
         }
 
-        .gradle-tabs {
-            margin-top: 20px;
-        }
-
-        .gradle-tabs-buttons {
-            display: flex;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradle-tab-btn {
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            margin-right: 5px;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            transition: var(--transition);
-            color: var(--light-text);
-        }
-
-        .gradle-tab-btn.active {
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            color: white;
-            border-bottom: none;
-        }
-
-        .gradle-tabcontent {
-            display: none;
-        }
-
-        .gradle-tabcontent.active {
-            display: block;
-        }
-
         .link-btn {
             display: inline-block;
             margin-right: 15px;
@@ -314,12 +307,14 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: var(--border-radius);
             overflow: hidden;
+            font-size: 14px;
         }
 
         .param-table th, .param-table td {
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 12px;
             text-align: left;
+            word-break: break-word;
         }
 
         .param-table th {
@@ -331,6 +326,19 @@
             background: rgba(255, 255, 255, 0.02);
         }
 
+        .server-content {
+            overflow-x: auto;
+        }
+
+        .server-content h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .server-content p {
+            margin: 10px 0;
+        }
+
         @media (max-width: 768px) {
             .config-section {
                 grid-template-columns: 1fr;
@@ -338,6 +346,18 @@
 
             .tab {
                 flex-direction: column;
+            }
+
+            .tab button {
+                min-width: 100%;
+            }
+
+            .param-table {
+                font-size: 12px;
+            }
+
+            .param-table th, .param-table td {
+                padding: 8px;
             }
         }
     </style>
@@ -371,8 +391,7 @@
         <div class="radio-group">
             <div class="radio-option">
                 <input type="checkbox" id="login_google" name="loginPlatform" value="google">
-                <label for="login_google"
-                       style="display: inline; font-weight: normal;">Google</label>
+                <label for="login_google" style="display: inline; font-weight: normal;">Google</label>
             </div>
             <div class="radio-option">
                 <input type="checkbox" id="login_vkid" name="loginPlatform" value="vkid">
@@ -404,13 +423,11 @@
         <div class="radio-group">
             <div class="radio-option">
                 <input type="checkbox" id="track_adjust" name="trackPlatform" value="adjust">
-                <label for="track_adjust"
-                       style="display: inline; font-weight: normal;">Adjust</label>
+                <label for="track_adjust" style="display: inline; font-weight: normal;">Adjust</label>
             </div>
             <div class="radio-option">
                 <input type="checkbox" id="track_firebase" name="trackPlatform" value="firebase">
-                <label for="track_firebase"
-                       style="display: inline; font-weight: normal;">Firebase</label>
+                <label for="track_firebase" style="display: inline; font-weight: normal;">Firebase</label>
             </div>
             <div class="radio-option">
                 <input type="checkbox" id="track_reli" name="trackPlatform" value="reli">
@@ -418,8 +435,7 @@
             </div>
             <div class="radio-option">
                 <input type="checkbox" id="track_tiktok" name="trackPlatform" value="tiktok">
-                <label for="track_tiktok"
-                       style="display: inline; font-weight: normal;">TikTok</label>
+                <label for="track_tiktok" style="display: inline; font-weight: normal;">TikTok</label>
             </div>
         </div>
     </div>
@@ -428,10 +444,8 @@
         <label>选择广告:</label>
         <div class="radio-group">
             <div class="radio-option">
-                <input type="checkbox" id="enableAds" name="adPlatform"
-                       onchange="toggleAdOptions()">
-                <label for="enableAds"
-                       style="display: inline; font-weight: normal;">接入广告</label>
+                <input type="checkbox" id="enableAds" name="adPlatform" onchange="toggleAdOptions()">
+                <label for="enableAds" style="display: inline; font-weight: normal;">接入广告</label>
             </div>
         </div>
 
@@ -491,62 +505,48 @@ request.setPlatformType(platformType);
     <div id="codeSection" class="code-section">
         <h2>对接代码</h2>
 
-        <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'gradle')">Gradle 配置</button>
-            <button class="tablinks" onclick="openTab(event, 'strings')">strings.xml</button>
-            <button class="tablinks" onclick="openTab(event, 'client')">客户端对接</button>
-            <button class="tablinks" onclick="openTab(event, 'server')">服务端验证</button>
-        </div>
+        <div class="tab-container">
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'projectGradle')">项目级 build.gradle</button>
+                <button class="tablinks" onclick="openTab(event, 'moduleGradle')">模块级 build.gradle</button>
+                <button class="tablinks" onclick="openTab(event, 'strings')">strings.xml</button>
+                <button class="tablinks" onclick="openTab(event, 'client')">客户端对接</button>
+                <button class="tablinks" onclick="openTab(event, 'server')">服务端验证</button>
+            </div>
 
-        <div id="gradle" class="tabcontent" style="display: block;">
-            <div class="gradle-tabs">
-                <div class="gradle-tabs-buttons">
-                    <button class="gradle-tab-btn active" onclick="openGradleTab('projectGradle')">
-                        项目级 build.gradle
-                    </button>
-                    <button class="gradle-tab-btn" onclick="openGradleTab('moduleGradle')">模块级
-                        build.gradle
-                    </button>
-                </div>
-
-                <div id="projectGradle" class="gradle-tabcontent active">
-                    <div class="code-block">
-                        <button class="copy-btn" onclick="copyToClipboard('projectGradleCode')">
-                            复制
-                        </button>
-                        <pre id="projectGradleCode"></pre>
-                    </div>
-                </div>
-
-                <div id="moduleGradle" class="gradle-tabcontent">
-                    <div class="code-block">
-                        <button class="copy-btn" onclick="copyToClipboard('moduleGradleCode')">
-                            复制
-                        </button>
-                        <pre id="moduleGradleCode"></pre>
-                    </div>
+            <div id="projectGradle" class="tabcontent" style="display: block;">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('projectGradleCode')">复制</button>
+                    <pre id="projectGradleCode"></pre>
                 </div>
             </div>
-        </div>
 
-        <div id="strings" class="tabcontent">
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyToClipboard('stringsCode')">复制</button>
-                <pre id="stringsCode"></pre>
+            <div id="moduleGradle" class="tabcontent">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('moduleGradleCode')">复制</button>
+                    <pre id="moduleGradleCode"></pre>
+                </div>
             </div>
-        </div>
 
-        <div id="client" class="tabcontent">
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyToClipboard('clientCode')">复制</button>
-                <pre id="clientCode"></pre>
+            <div id="strings" class="tabcontent">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('stringsCode')">复制</button>
+                    <pre id="stringsCode"></pre>
+                </div>
             </div>
-        </div>
 
-        <div id="server" class="tabcontent">
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyToClipboard('serverCode')">复制</button>
-                <div id="serverCode"></div>
+            <div id="client" class="tabcontent">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('clientCode')">复制</button>
+                    <pre id="clientCode"></pre>
+                </div>
+            </div>
+
+            <div id="server" class="tabcontent">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard('serverCode')">复制</button>
+                    <div id="serverCode" class="server-content"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -756,11 +756,26 @@ android {
         }
 
         moduleGradleCode += `
+    }`;
+
+        // 添加android配置
+        if (payOptions.includes('rus')) {
+            moduleGradleCode += `
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
+    kotlinOptions {
+        jvmTarget = '11'
+    }`;
+        }
+
+        moduleGradleCode += `
 }
 
 dependencies {
-    //基础库
+   //基础库
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
@@ -804,7 +819,9 @@ dependencies {
             moduleGradleCode += `
     //RUS支付库
     implementation '${packagePrefix}:pay-rus:1.0.0.1-SNAPSHOT'
-    implementation 'androidx.core:core-ktx:1.17.0'`;
+    implementation 'androidx.core:core-ktx:1.17.0'
+    //脱糖
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")`;
         }
 
         // 数据统计库
@@ -927,12 +944,11 @@ request.setPlatformType(${region === 'hk' ? 'XJ_TYPE_PLATFORM_HK' : region === '
             apiUrl = 'pay.xfxmkt.com';
         }
 
-        let serverCode = `一、用户二次验证
+        let serverCode = `<h3>一、用户二次验证</h3>
+<p>接口地址: https://${apiUrl}/htmlApi/checkHtmlToken.jhtml</p>
+<p>请求方式: POST</p>
 
-接口地址: https://${apiUrl}/htmlApi/checkHtmlToken.jhtml
-请求方式: POST
-
-请求参数:
+<p>请求参数:</p>
 <table class="param-table">
   <tr>
     <th>字段名</th>
@@ -960,7 +976,7 @@ request.setPlatformType(${region === 'hk' ? 'XJ_TYPE_PLATFORM_HK' : region === '
   </tr>
 </table>
 
-返回参数:
+<p>返回参数:</p>
 <table class="param-table">
   <tr>
     <th>字段名</th>
@@ -980,12 +996,11 @@ request.setPlatformType(${region === 'hk' ? 'XJ_TYPE_PLATFORM_HK' : region === '
   </tr>
 </table>
 
-二、订单验证
+<h3>二、订单验证</h3>
+<p>接口地址: https://${apiUrl}/htmlApi/checkHtmlOrder.jhtml</p>
+<p>请求方式: POST</p>
 
-接口地址: https://${apiUrl}/htmlApi/checkHtmlOrder.jhtml
-请求方式: POST
-
-请求参数:
+<p>请求参数:</p>
 <table class="param-table">
   <tr>
     <th>字段名</th>
@@ -1013,7 +1028,7 @@ request.setPlatformType(${region === 'hk' ? 'XJ_TYPE_PLATFORM_HK' : region === '
   </tr>
 </table>
 
-返回参数:
+<p>返回参数:</p>
 <table class="param-table">
   <tr>
     <th>字段名</th>
@@ -1054,30 +1069,10 @@ request.setPlatformType(${region === 'hk' ? 'XJ_TYPE_PLATFORM_HK' : region === '
         evt.currentTarget.className += " active";
     }
 
-    function openGradleTab(tabName) {
-        const gradleTabs = document.getElementsByClassName("gradle-tabcontent");
-        for (let i = 0; i < gradleTabs.length; i++) {
-            gradleTabs[i].classList.remove("active");
-        }
-
-        const gradleTabBtns = document.getElementsByClassName("gradle-tab-btn");
-        for (let i = 0; i < gradleTabBtns.length; i++) {
-            gradleTabBtns[i].classList.remove("active");
-        }
-
-        document.getElementById(tabName).classList.add("active");
-        event.currentTarget.classList.add("active");
-    }
-
     function copyToClipboard(elementId) {
         const text = document.getElementById(elementId).textContent;
         navigator.clipboard.writeText(text).then(function() {
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = '已复制!';
-            setTimeout(function() {
-                btn.textContent = originalText;
-            }, 2000);
+            alert('代码已复制到剪贴板');
         }, function(err) {
             console.error('复制失败: ', err);
         });
