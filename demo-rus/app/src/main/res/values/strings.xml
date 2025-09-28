@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">demo-rus</string>
+
+    <!-- 应用唯一标识 -->
+    <string name="application_id">com.xinji.testrus</string>
+    <!-- RUS支付配置 -->
+    <string name="rus_console_appid">184050</string>
+    <string name="rus_deeplink_scheme">com_xinji_testrus</string>
+    <!-- Adjust配置 -->
+    <string name="adjust_app_key">9jp58df3qjgg</string>
+    <!-- 广告配置 -->
+    <string name="applovin_sdk_key">OCpD3RM3hfIxQuzngoQdElzri8Li3U67KJTwg4B_NPem3GSwBv1OCw9xh3E3sRptsOop_FzUgIuzmK2RxFtKCR</string>
+    <string name="gg_admob_app_id">ca-app-pub-4430438031018910~6684066455</string>
+</resources>

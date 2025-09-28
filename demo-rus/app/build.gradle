@@ -1,0 +1,70 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace 'com.xinji.testrus'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.xinji.testrus"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        manifestPlaceholders = [
+                VKIDRedirectHost  : "oauth.vk.com",
+                VKIDRedirectScheme: "vk{your_app_id}", // 格式: vk{app_id}
+                VKIDClientID      : "your_app_id",
+                VKIDClientSecret  : "your_app_secret"
+        ]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled = true//脱糖
+
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildFeatures {
+    }
+}
+
+dependencies {
+    //基础库必须引用
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.constraintlayout
+    implementation libs.gson
+    /**
+     * todo 以下sdk 远程引用具体根据所有功能和版本进行选择
+     */
+    //核心库
+    implementation 'com.xxxx:core:xxxxx'
+    //基础库
+    implementation 'com.xxxxx:base:xxxxx'
+    //VK ID登录库
+    implementation 'com.xxxxx:login-vkid:xxxxx'
+    //RUS支付库
+    implementation 'com.xxxxx:pay-rus:xxxxx'
+    //Adjust数据统计库
+    implementation 'com.xxxxx:track-adjust:xxxxx'
+    //TopOn广告库
+    implementation 'com.xxxxx:ads-topon:xxxxxx'
+    //脱糖
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+}

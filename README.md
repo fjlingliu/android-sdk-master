@@ -251,7 +251,43 @@ android {
 }
 ``````
 
-### 2.4.4添加rustore 配置(如果接入了ruStore支付)
+### 2.4.4添加rustore 配置(如果接入了ruStore支付,需要配置kotlin环境)
+- 在项目的顶级build.gradle文件，确保kotlin的Maven仓库包括：
+
+````
+buildscript {
+  
+    repositories {
+    
+      google()
+      
+      mavenCentral()
+      
+      maven { url 'https://maven.google.com' }
+    
+    }
+    
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.10.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"
+    } 
+  
+  }
+````
+
+- 应用级build.gradle配置（app/build.gradle） 
+
+``````
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+
+android {
+
+// ...
+
+}
+``````
 
 
 # 3 接口说明

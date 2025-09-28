@@ -1,0 +1,59 @@
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+
+        //俄罗斯仓库
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenLocal() // 确保本地仓库在第一位
+        google()
+        mavenCentral()
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/se_sdk_for_android/"
+        }
+        //适配器仓库
+        maven {
+            url "https://code-wan.qu06.cn/repository/maven-releases/"
+        }
+        maven {
+            url "https://code-wan.qu06.cn/repository/maven-snapshots/"
+        }
+        //俄罗斯仓库
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+        }
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/vkid-sdk-android/")
+        }
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/vk-id-captcha/android/")
+        }
+        //topon 广告仓库
+        flatDir {
+            dirs 'libs'
+        }
+        maven {
+            url "https://jfrog.anythinktech.com/artifactory/overseas_sdk"
+        }
+        maven {
+            url "https://jfrog.anythinktech.com/artifactory/debugger"
+        }
+    }
+}
+
+rootProject.name = "demo-rus"
+include ':app'
