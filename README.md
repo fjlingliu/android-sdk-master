@@ -176,9 +176,12 @@ implementation 'com.google.code.gson:gson:2.8.9'
 4. **server_client_id已经废弃，请使用goolge\_web\_client\_id**
 5. rus_deeplink_scheme
    命名规则：可用包名（com.xxx.xxx）就是为com_xxx_xxx
+   
    deeplinkScheme—用于通过第三方应用程序支付后返回您的应用程序的deeplink方案
    如果配置了，需要在mainifest主页面 <intent-filter>标签下中添加:
+   ```
    <data android:scheme="@string/rus_deeplink_scheme" />
+   ```
 
 ### 2.4.2 amazon登录授权key（如不接amazon登录可忽略此步骤）
 
