@@ -18,19 +18,19 @@
 ## 2.1 申请应用配置
 
 ### 2.1.1查看出包物料(在需要对接对应功能时需找运营提供)
-| 功能         | 名称                       | 值                          |
-|:-----------|:-------------------------|:---------------------------|
-| 应用标识       | **包名**                   | com.xx.xx                  |
-| 应用信息       | **游戏名称**                 | 安卓测试                       |
-| 应用信息       | **游戏PID**                | 310000                     |
-| 支付配置       | **内购ID**                 | hfceshi1                   |
-| fb登录       | **Facebook授权Key**        | facebook登录需要配置的参数（可选）      |
-| google登录   | **google_web_client_id** | 可以从Google-services.json中获取（可选） |
-| vkid登录     | **无需额外参数**               |                （可选）            |
-| adjust数据统计 | **Adjust授权key**          | Adjust追踪配置的参数（可选）              |
-| tiktok数据统计 | **Tiktok自归因参数**          | xxxxxxx（可选）     |
-| google相关功能 | **Google-services.json** | FirebaseAndroid配置文件（可选）        |
-| rustore支付  | **rustore支付appid**       | rus_console_appid（可选）          |
+| 功能         | 名称                        | 值                          |
+|:-----------|:--------------------------|:---------------------------|
+| 应用标识       | **包名**                    | com.xx.xx                  |
+| 应用信息       | **游戏名称**                  | 安卓测试                       |
+| 应用信息       | **游戏PID**                 | 310000                     |
+| 支付配置       | **内购ID**                  | hfceshi1                   |
+| fb登录       | **Facebook授权Key**         | facebook登录需要配置的参数（可选）      |
+| google登录   | **google_web_client_id**  | 可以从Google-services.json中获取（可选） |
+| vkid登录     | **clientId,clientSecret** |                （可选）            |
+| adjust数据统计 | **Adjust授权key**           | Adjust追踪配置的参数（可选）              |
+| tiktok数据统计 | **Tiktok自归因参数**           | xxxxxxx（可选）     |
+| google相关功能 | **Google-services.json**  | FirebaseAndroid配置文件（可选）        |
+| rustore支付  | **rustore支付appid**        | rus_console_appid（可选）          |
 ## 2.1.2 环境要求
 
 注：最低版本不能低于36，google要求。
@@ -250,8 +250,21 @@ android {
 
 }
 ``````
-
-### 2.4.4添加rustore 配置(如果接入了ruStore支付,需要配置kotlin环境)
+### 2.4.4 vkid登录参数配置
+build.gradle下添加
+```
+android {
+   defaultConfig {
+      manifestPlaceholders = [
+         VKIDRedirectHost: "vk.com",//默认vk.com
+         VKIDRedirectScheme: "vk{app_id}", // 格式: vk{app_id}
+         VKIDClientID: "{client_id}",
+         VKIDClientSecret: "{ClientSecret}"
+      ]
+   }
+}
+```
+### 2.4.5添加rustore 配置(如果接入了ruStore支付,需要配置kotlin环境)
 - 在项目的顶级build.gradle文件，确保kotlin的Maven仓库包括：
 
 ````
