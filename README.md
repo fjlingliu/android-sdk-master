@@ -47,81 +47,8 @@ Gradle版本大于8.0
 
 生成debug的sha1和release的sha1，提供给我方的运营人员，且提供facebook的测试账号，google的测试账号以及Adjust的测试账号。
 
-## 2.3 导入资源包
-
-### 2.3.1 添加仓库
-
-````
-repositories {
-
-  google()
-  
-  jcenter()
-  
-  mavenCentral()
-  
-  maven { url "https://jitpack.io" }
-
-  maven {
-  
-    url "https://dl-maven-android.mintegral.com/repository/se\_sdk\_for\_android/"
-  
-  }
-  
-  //topon 广告仓库（不接广告不用引用）
-
-  flatDir {
-  
-    dirs 'libs'
-  
-  }
-
-  maven {
-  
-    url "https://jfrog.anythinktech.com/artifactory/overseas\_sdk"
-  
-  }
-  
-  //tiktok 仓库
-  maven { url 'https://jitpack.io' } // add this line!!
-  
-  //SDK适配器仓库
-  
-  maven {
-     url "https://code-wan.qu06.cn/repository/maven-releases/"
-  }
-
-}
-
-}
-````
-
-###  
-
-###  
-
-### 2.3.2 配置build.gradle文件
-
-**添加引用**
-
-````
-
-//核心库
-
-//todo 核心库- 根据文档下载版本去替换
-implementation 'com.xxx.xxx:core:xxxx'
-//todo 支付库- 根据文档下载版本去替换
-implementation 'com.xxx.xxxx:pay-google:xxxx'
-
-//基础库
-implementation 'androidx.appcompat:appcompat:1.7.1'
-implementation 'com.google.android.material:material:1.13.0'
-implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-implementation 'com.google.code.gson:gson:2.8.9'
-
-//todo 具体功能添加对应的仓库
-
-````
+## 2.3 sdk引用
+-根据用户提供的对接文档，点击生成对接代码按钮 生成匹配的sdk引用 并添加到项目中
 
 ## 2.4 配置应用的参数配置
 
